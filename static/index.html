@@ -1,0 +1,25 @@
+<html>
+	<head>
+		<title>Pokédex Master</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
+		<link rel="stylesheet" href="./main.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&family=Wendy+One&display=swap" rel="stylesheet">
+		<script type="module" src="./main.js"></script>
+	</head>
+	<body>
+		<div id="main">
+			<div id="question" class="card light">
+				Welcome to<br />Pokédex Master
+			</div>
+			<div id="answer" class="card light">
+				<div id="answer-box" style="visibility: hidden;">
+					Which Pokémon is it?<br />
+					<input id="answer-field" type="text" oninput="onAnswerInput()" />
+				</div>
+			</div>
+			<div id="options" class="card dark"></div>
+		</div>
+	</body>
+</html>

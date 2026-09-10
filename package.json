@@ -1,4 +1,11 @@
 {
+  "name": "pokedex-master",
+  "version": "0.0.1",
+  "author": "1trickPwnyta",
+  "scripts": {
+	"start": "http-server -d false -s ./static",
+	"test": "http-server -c-1 ./static"
+  },
   "dependencies": {
     "http-server": "^14.1.1"
   }
