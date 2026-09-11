@@ -6,6 +6,7 @@ const ANSWER = document.getElementById("answer");
 const ANSWER_BOX = document.getElementById("answer-box");
 const ANSWER_FIELD = document.getElementById("answer-field");
 const OPTIONS = document.getElementById("options");
+const MESSAGE_BACKGROUND = document.getElementById("message-background");
 
 const OPTION_START = { text: "Start", action: onOptionStart };
 const OPTION_GIVEUP = { text: "Give up", action: onOptionGiveUp };
@@ -24,11 +25,16 @@ function getCurrentPokemon() {
 	return pokemon[board[level] - 1];
 }
 
+function makeButton(text, action) {
+	let button = document.createElement("div");
+	button.className = "option";
+	button.innerText = text;
+	button.onclick = action;
+	return button;
+}
+
 function addOption(opt) {
-	let option = document.createElement("div");
-	option.className = "option";
-	option.innerText = opt.text;
-	option.onclick = opt.action;
+	let option = makeButton(opt.text, opt.action);
 	opt.option = option;
 	OPTIONS.appendChild(option);
 	options.push(opt);
@@ -65,8 +71,10 @@ function onOptionStart() {
 }
 
 function onOptionGiveUp() {
-	stopGame();
-	QUESTION.innerText = `It was ${getCurrentPokemon().name}!`;
+	confirm("You really want to give up?", () => {
+		stopGame();
+		QUESTION.innerText = `It was ${getCurrentPokemon().name}!`;
+	});
 }
 
 function onOptionRestart() {
@@ -133,6 +141,39 @@ function blinkAnswerField() {
 	ANSWER_FIELD.style.boxShadow = normalShadow;
 	void ANSWER_FIELD.offsetHeight;
 	ANSWER_FIELD.style.transition = "";
+}
+
+function confirm(message, onYes, onNo, onCancel) {
+	MESSAGE_BACKGROUND.innerHTML = "";
+	MESSAGE_BACKGROUND.style.visibility = "visible";
+	
+	let messageBox = document.createElement("div");
+	messageBox.className = "message-box card light";
+	
+	let messageArea = document.createElement("div");
+	messageArea.className = "message-area";
+	messageArea.innerText = message;
+	messageBox.appendChild(messageArea);
+	
+	let buttonArea = document.createElement("div");
+	buttonArea.className = "button-area";
+	let yesButton = makeButton("Yes", () => closeMessage(onYes));
+	buttonArea.appendChild(yesButton);
+	let noButton = makeButton("No", () => closeMessage(onNo));
+	buttonArea.appendChild(noButton);
+	messageBox.appendChild(buttonArea);
+	
+	let messageClose = document.createElement("div");
+	messageClose.className = "message-close";
+	messageClose.onclick = () => closeMessage(onCancel ?? onNo);
+	messageBox.appendChild(messageClose);
+	
+	MESSAGE_BACKGROUND.appendChild(messageBox);
+}
+
+function closeMessage(callback = () => {}) {
+	MESSAGE_BACKGROUND.style.visibility = "hidden";
+	callback();
 }
 
 window.onOptionStart = onOptionStart;

@@ -61,7 +61,7 @@ body {
 }
 
 #answer-field:focus {
-	box-shadow: 0 0 25px 0.5vh white;
+	box-shadow: 0 0 10px 0 white;
 }
 
 #options {
@@ -78,9 +78,57 @@ body {
 	cursor: pointer;
 	user-select: none;
 	display: inline-block;
+	min-width: 6vw;
 }
 
 .option:active {
 	box-shadow: 0 0 5px 0.5vh black;
 	transform: scale(90%);
+}
+
+#message-background {
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.75);
+	z-index: 100;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.message-box {
+	background: #D6CBC2;
+	min-width: 35vw;
+	min-height: 35vh;
+	border: 2vh solid #3A3622;
+	flex-direction: column;
+	position: relative;
+}
+
+.message-area {
+	height: 70%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.button-area {
+	display: flex;
+	flex-direction: row;
+	gap: 2vw;
+}
+
+.message-close {
+	width: 8vh;
+	height: 8vh;
+	background-color: #3A3622;
+	mask-image: url('./close-box.png');
+	mask-size: contain;
+	mask-repeat: no-repeat;
+	position: absolute;
+	right: 1vh;
+	top: 1vh;
+	cursor: pointer;
 }
