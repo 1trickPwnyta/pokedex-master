@@ -1,6 +1,6 @@
 {
   "name": "pokedex-master",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "1trickPwnyta",
   "scripts": {
 	"start": "http-server ./static -a 0.0.0.0 -p 80 -d false -s",
