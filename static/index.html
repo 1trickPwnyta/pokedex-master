@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<title>Pokédex Master</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content, viewport-fit=cover">
 		<link rel="stylesheet" href="./main.css" />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,8 +11,24 @@
 	<body>
 		<div id="message-background" style="visibility: hidden;"></div>
 		<div id="main">
-			<div id="question" class="card light">
-				Welcome to<br />Pokédex Master
+			<div id="top">
+				<div id="left">
+					<div id="timer" class="card dark"></div>
+					<div id="question" class="card light">
+						<div id="question-text">
+							Welcome to<br />Pokédex Master
+						</div>
+						<div id="question-image">
+							<img src="./icon.png" />
+						</div>
+					</div>
+				</div>
+				<div id="right">
+					<div id="progress" class="card dark"></div>
+					<div id="collection" class="card light">
+						<div id="collection-container"></div>
+					</div>
+				</div>
 			</div>
 			<div id="answer" class="card light">
 				<div id="answer-box" style="visibility: hidden;">

@@ -1,3 +1,7 @@
+html {
+	padding-bottom: max(env(safe-area-inset-bottom), 4vh);
+}
+
 body {
 	margin: 0px;
 	padding: 0px;
@@ -7,13 +11,13 @@ body {
 	font-family: "Passion One", sans-serif;
 	font-weight: 400;
 	font-style: normal;
+	background-color: #3A3622;
 }
 
 #main {
-	background-color: #3A3622;
-	width: 100%;
+	width: calc(100% - 4vh);
 	height: 99%;
-	padding-top: 2vh;
+	padding: 2vh;
 	display: flex;
 	flex-direction: column;
 	gap: 2vh;
@@ -21,7 +25,6 @@ body {
 
 .card {
 	padding: 2vh;
-	margin: 0 2vh;
 	border-radius: 10px;
 	display: flex;
 	justify-content: center;
@@ -34,18 +37,123 @@ body {
 	color: #3A3622;
 }
 
+.dark {
+	color: #D6CBC2;
+}
+
+#top {
+	height: 63vh;
+	display: flex;
+	flex-direction: row;
+	gap: 2vh;
+}
+
+#left {
+	display: flex;
+	flex-direction: column;
+	gap: 2vh;
+	width: 100%;
+}
+
+#timer {
+	background-color: #6A4606;
+	min-height: 3vh;
+	max-height: 3vh;
+}
+
 #question {
 	background-color: #D6CBC2;
-	height: 50vh;
+	height: 100%;
+	flex-direction: column;
+	gap: 5vh;
 }
 
 .question-number {
 	font-size: 15cqh;
 }
 
+#question-image img {
+	min-height: 30vh;
+	max-height: 30vh;
+}
+
+.giveup-x {
+	animation: giveup-x 0.25s cubic-bezier(0.37, 0, 0.63, 1) forwards;
+}
+
+.giveup-y {
+	animation: giveup-y 0.25s cubic-bezier(0.37, 0, 0.63, 1) forwards;
+	animation-delay: -0.05s;
+}
+
+#right {
+	display: flex;
+	flex-direction: column;
+	gap: 2vh;
+	min-width: 8vh;
+	max-width: 8vh;
+}
+
+#progress {
+	background-color: #6A4606;
+	min-height: 7vh;
+	max-height: 7vh;
+	font-size: 3cqh;
+	overflow: hidden;
+	padding: 0;
+}
+
+#collection {
+	background-color: #D6CBC2;
+	height: 100%;
+	overflow: hidden;
+	padding: 0.25vh;
+}
+
+#collection-container {
+	height: calc(100% - 1.5vh);
+	display: flex;
+	flex-direction: column;
+	gap: 1vh;
+	justify-content: flex-start;
+	mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+	padding: 0.75vh;
+}
+
+.collected {
+	background-color: #3A3622;
+	width: 2vh;
+	min-height: 2vh;
+	max-height: 2vh;
+	position: relative;
+	transition: opacity 0.25s ease-in;
+	animation: bubble-in 0.25s ease-out forwards;
+	background-size: 120%;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.collected-number {
+	background-color: #D6CBC288;
+	font-size: 2cqh;
+	line-height: 1.5vh;
+	border-radius: 0.5vh;
+	padding: 0.2vh;
+	position: absolute;
+	right: 0.3vh;
+	bottom: 0.3vh;
+}
+
+.small-symbol {
+	font-size: 0.6em;
+	display: inline-block;
+	vertical-align: top;
+	line-height: 1;
+}
+
 #answer {
 	background-color: #2CC3BE;
-	height: 20vh;
+	height: 11vh;
 	font-size: 4cqh;
 }
 
@@ -78,7 +186,22 @@ body {
 	cursor: pointer;
 	user-select: none;
 	display: inline-block;
-	min-width: 6vw;
+	min-width: 6vh;
+	height: 1lh;
+	position: relative;
+	margin-inline: auto;
+}
+
+.option div {
+	mask-size: contain;
+	mask-repeat: no-repeat;
+	mask-position: center;
+	background-color: #3A3622;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
 }
 
 .option:active {
@@ -88,8 +211,8 @@ body {
 
 #message-background {
 	position: absolute;
-	width: 100vw;
-	height: 100vh;
+	width: 100%;
+	height: 100%;
 	background-color: rgba(0, 0, 0, 0.75);
 	z-index: 100;
 	display: flex;
@@ -101,6 +224,7 @@ body {
 .message-box {
 	background: #D6CBC2;
 	min-width: 35vw;
+	max-width: 65vw;
 	min-height: 35vh;
 	border: 2vh solid #3A3622;
 	flex-direction: column;
@@ -110,8 +234,21 @@ body {
 .message-area {
 	height: 70%;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	font-size: 0.6em;
+}
+
+.message-title {
+	font-size: 1.4em;
+	text-align: left;
+	width: 100%;
+}
+
+.message-text {
+	text-align: left;
+	width: 100%;
 }
 
 .button-area {
@@ -123,12 +260,32 @@ body {
 .message-close {
 	width: 8vh;
 	height: 8vh;
-	background-color: #3A3622;
-	mask-image: url('./close-box.png');
-	mask-size: contain;
-	mask-repeat: no-repeat;
 	position: absolute;
-	right: 1vh;
-	top: 1vh;
-	cursor: pointer;
+	right: -4vh;
+	top: -4vh;
+	border: 0;
+	padding: 0;
+}
+
+.message-close:active {
+	box-shadow: initial;
+	transform: initial;
+}
+
+@keyframes bubble-in {
+	0% { transform: scale(0); }
+	75% { transform: scale(1.25); }
+	100% { transform: scale(1); }
+}
+
+@keyframes giveup-x {
+	0% { transform: translateX(-2vh); }
+	50% { transform: translateX(2vh); }
+	100% { transform: translateX(0); }
+}
+
+@keyframes giveup-y {
+	0% { transform: translateY(-2vh); }
+	50% { transform: translateY(2vh); }
+	100% { transform: translateY(0); }
 }

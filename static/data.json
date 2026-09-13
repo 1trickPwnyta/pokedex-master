@@ -1,0 +1,10 @@
+{
+	"generations": [
+		{
+			"name": "Generation 1",
+			"range": [ 1, 151 ],
+			"sprite_prefix": "https://img.pokemondb.net/sprites/black-white/normal/",
+			"sprite_suffix": ".png"
+		}
+	]
+}
