@@ -156,6 +156,7 @@ function collect() {
 	collected.style.backgroundImage = `url('${getSpriteUrl(board[level], getCurrentPokemon())}')`;
 	collected.innerHTML = `<div class="collected-number"><span class="small-symbol">#</span>${board[level]}</div>`;
 	COLLECTION.prepend(collected);
+	COLLECTION.scrollTop = 0;
 	flushStyle(collected);
 	collected.style.opacity = "1";
 	const postY = first?.getBoundingClientRect().top;
@@ -283,6 +284,9 @@ function doDialog(options) {
 	if (options.title) {
 		messageArea.innerHTML = `<div class="message-title">${options.title}</div>`;
 	}
+	if (options.subtitle) {
+		messageArea.innerHTML += `<div class="message-subtitle">${options.subtitle}</div>`;
+	}
 	if (options.message) {
 		messageArea.innerHTML += `<div class="message-text">${options.message}</div>`;
 	}
@@ -318,6 +322,7 @@ function closeMessage(callback = () => {}) {
 function showHelp() {
 	doDialog({
 		title: `Pokédex Master v${meta.version}`,
+		subtitle: "by 1trickPwnyta",
 		message: `<p>So you can name all the Pokémon in dex order from memory and you think you're real smart, huh? But can you name them all <em>by dex number</em> in random order?</p>
 <p>The path to Pokédex mastery is long and difficult. Do you have what it takes?</p>`
 	});

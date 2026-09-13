@@ -1,6 +1,6 @@
 {
   "name": "pokedex-master",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "1trickPwnyta",
   "scripts": {
 	"prestart": "node -e \"fs.writeFileSync('./static/meta.json', JSON.stringify({ version: require('./package.json').version }))\"",
