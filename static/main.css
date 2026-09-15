@@ -42,6 +42,18 @@ body {
 	color: #D6CBC2;
 }
 
+.button-area {
+	display: flex;
+	flex-direction: row;
+	gap: 2vw;
+}
+
+.button-column {
+	display: flex;
+	flex-direction: column;
+	gap: 1vh;
+}
+
 #top {
 	flex-grow: 1;
 	display: flex;
@@ -180,17 +192,24 @@ body {
 	box-shadow: 0 0 10px 0 white;
 }
 
+#bottom {
+	display: flex;
+	flex-direction: row;
+	gap: 2vh;
+	min-height: 14vh;
+	max-height: 14vh;
+}
+
 #options {
 	background-color: #6A4606;
-	min-height: 10vh;
-	max-height: 10vh;
+	width: 100%;
 }
 
 .option {
 	background-color: #D6CBC2;
 	color: #3A3622;
 	border: 1vh #3A3622 solid;
-	border-radius: 10px;
+	border-radius: 1vh;
 	padding: 1vh;
 	cursor: pointer;
 	user-select: none;
@@ -213,9 +232,21 @@ body {
 	top: 0;
 }
 
+.button-column .option {
+	min-width: 0;
+	aspect-ratio: 1;
+	height: 0.5lh;
+	border-radius: 1vh;
+}
+
 .option:active {
 	box-shadow: 0 0 5px 0.5vh black;
 	transform: scale(90%);
+}
+
+#settings {
+	background-color: #6A4606;
+	padding: 1vh;
 }
 
 #message-background {
@@ -232,7 +263,7 @@ body {
 
 .message-box {
 	background: #D6CBC2;
-	min-width: 35vw;
+	min-width: 45vw;
 	max-width: 65vw;
 	min-height: 35vh;
 	border: 2vh solid #3A3622;
@@ -241,6 +272,7 @@ body {
 }
 
 .message-area {
+	width: 100%;
 	height: 70%;
 	display: flex;
 	flex-direction: column;
@@ -266,12 +298,6 @@ body {
 	width: 100%;
 }
 
-.button-area {
-	display: flex;
-	flex-direction: row;
-	gap: 2vw;
-}
-
 .message-close {
 	width: 8vh;
 	height: 8vh;
@@ -285,6 +311,34 @@ body {
 .message-close:active {
 	box-shadow: initial;
 	transform: initial;
+}
+
+.dialog-choice {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: start;
+}
+
+input[type="checkbox"] {
+	appearance: none;
+	height: 2lh;
+	aspect-ratio: 1;
+	border: 0.5vh #3A3622 solid;
+	border-radius: 1vh;
+	cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+	mask-image: url("./checkbox-marked.png");
+	mask-size: contain;
+	mask-repeat: no-repeat;
+	mask-position: center;
+	background-color: #3A3622;
+}
+
+.jitter {
+	animation: jitter 0.1s infinite;
 }
 
 @keyframes bubble-in {
@@ -303,4 +357,18 @@ body {
 	0% { transform: translateY(-2vh); }
 	50% { transform: translateY(2vh); }
 	100% { transform: translateY(0); }
+}
+
+@keyframes jitter {
+	0% { transform: translate(0, 0); }
+	10% { transform: translate(-2px, -2px); }
+	20% { transform: translate(2px, 1px); }
+	30% { transform: translate(-1px, 2px); }
+	40% { transform: translate(1px, -1px); }
+	50% { transform: translate(-2px, 1px); }
+	60% { transform: translate(2px, -1px); }
+	70% { transform: translate(-1px, -2px); }
+	80% { transform: translate(1px, 2px); }
+	90% { transform: translate(-2px, -1px); }
+	100% { transform: translate(0, 0); }
 }
