@@ -161,7 +161,10 @@ function onOptionSettings() {
 
 function updateTimer() {
 	const milliseconds = new Date() - startTime;
-	TIMER.innerText = dayjs.duration(milliseconds).format("mm:ss");
+	const duration = dayjs.duration(milliseconds);
+	const minutes = Math.floor(duration.asMinutes());
+	const seconds = duration.seconds();
+	TIMER.innerText = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 }
 
 function updateProgress() {
