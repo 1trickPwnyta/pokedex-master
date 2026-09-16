@@ -87,8 +87,8 @@ body {
 }
 
 #question-image img {
-	min-height: 26vh;
-	max-height: 26vh;
+	min-height: 25vh;
+	max-height: 25vh;
 }
 
 .giveup-x {
