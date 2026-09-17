@@ -1,5 +1,5 @@
 import arrayShuffle from "https://esm.sh/array-shuffle@3.0.0";
-import dayjs from "https://esm.sh/dayjs@1/dayjs.min.js";
+import dayjs from "https://esm.sh/dayjs@1";
 import duration from "https://esm.sh/dayjs@1/plugin/duration";
 dayjs.extend(duration);
 
