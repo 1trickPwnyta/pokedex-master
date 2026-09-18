@@ -8,6 +8,8 @@ import pokemon from "./pokemon.json";
 
 import IMAGE_CLOSE_BOX from "./close-box.png?inline";
 import IMAGE_CHECKBOX_CHECKED from "./checkbox-marked.png?inline";
+import IMAGE_SOUND_ON from "./volume-high.png?inline";
+import IMAGE_SOUND_OFF from "./volume-off.png?inline";
 import IMAGE_NO_IMAGE from "./alert-circle.png?inline";
 
 const MAIN = document.getElementById("main");
@@ -30,10 +32,12 @@ const OPTION_RESTART = { text: "Restart", action: onOptionRestart };
 const OPTION_HELP = { image: new URL("./help-box.png", import.meta.url).href, action: onOptionHelp };
 const OPTION_SETTINGS = { image: new URL("./cog-box.png", import.meta.url).href, action: onOptionSettings };
 
-const SOUND_CLICK = new Audio(new URL("./click.wav", import.meta.url).href);
-const SOUND_REJECT = new Audio(new URL("./reject.wav", import.meta.url).href);
-const SOUND_GIVEUP = new Audio(new URL("./giveup.wav", import.meta.url).href);
-const SOUND_WIN = new Audio(new URL("./win.wav", import.meta.url).href);
+const SOUND_CLICK = loadAudio(new URL("./click.wav", import.meta.url).href);
+const SOUND_REJECT = loadAudio(new URL("./reject.wav", import.meta.url).href);
+const SOUND_GIVEUP = loadAudio(new URL("./giveup.wav", import.meta.url).href);
+const SOUND_WIN = loadAudio(new URL("./win.wav", import.meta.url).href);
+
+let muteAudio = localStorage.pokedex_master_muteAudio ?? false;
 
 let level;
 let board;
@@ -51,6 +55,8 @@ addSetting(OPTION_SETTINGS);
 await cacheBackground(IMAGE_NO_IMAGE);
 await cacheBackground(IMAGE_CLOSE_BOX);
 await cacheBackground(IMAGE_CHECKBOX_CHECKED, "--checkbox-checked");
+await cacheBackground(IMAGE_SOUND_ON);
+await cacheBackground(IMAGE_SOUND_OFF);
 
 if (!localStorage.pokedex_master_generations || !JSON.parse(localStorage.pokedex_master_generations).length) {
 	localStorage.pokedex_master_generations = localStorage.generations ?? JSON.stringify([ data.generations[0].name ]);
@@ -91,6 +97,15 @@ async function cacheBackground(url, varName) {
 	});
 }
 
+function loadAudio(url) {
+	const audio = new Audio(url);
+	return {
+		play: () => {
+			if (!muteAudio) audio.play();
+		}
+	};
+}
+
 function jitter(element) {
 	element.classList.add("jitter");
 	setTimeout(() => element.classList.remove("jitter"), 250);
@@ -109,7 +124,7 @@ function getCurrentPokemon() {
 	return pokemon[board[level] - 1];
 }
 
-function makeButton(text, image, action) {
+function makeButton(text, image, action, playClickSound = true) {
 	let button = document.createElement("div");
 	button.className = "option";
 	button.innerText = text ?? "";
@@ -117,9 +132,14 @@ function makeButton(text, image, action) {
 		const icon = document.createElement("div");
 		icon.style.maskImage = `url('${image}')`;
 		button.appendChild(icon);
+		button.setImage = url => {
+			icon.style.maskImage = `url('${url}')`;
+		};
 	}
 	button.onclick = () => {
-		SOUND_CLICK.play();
+		if (playClickSound) {
+			SOUND_CLICK.play();
+		}
 		action();
 	};
 	return button;
@@ -471,6 +491,7 @@ function showHelp() {
 
 function showSettings() {
 	const element = document.createElement("div");
+	element.className = "settings-main";
 	
 	const generationsButton = makeButton("Generations", null, () => {
 		const selected = JSON.parse(localStorage.pokedex_master_generations);
@@ -481,6 +502,17 @@ function showSettings() {
 		}, null, 1);
 	});
 	element.appendChild(generationsButton);
+	
+	const bottom = document.createElement("div");
+	bottom.className = "settings-bottom";
+	const audioButton = makeButton("", muteAudio ? IMAGE_SOUND_OFF : IMAGE_SOUND_ON, () => {
+		muteAudio = !muteAudio;
+		localStorage.pokedex_master_muteAudio = muteAudio;
+		audioButton.setImage(muteAudio ? IMAGE_SOUND_OFF : IMAGE_SOUND_ON);
+		SOUND_CLICK.play();
+	}, false);
+	bottom.appendChild(audioButton);
+	element.appendChild(bottom);
 	
 	doDialog({
 		title: "Options",

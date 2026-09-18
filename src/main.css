@@ -365,6 +365,15 @@ input[type="checkbox"]:checked {
 	background-color: #3A3622;
 }
 
+.settings-main {
+	padding-top: 1vh;
+}
+
+.settings-bottom {
+	padding: 1vh 0;
+	width: 100%;
+}
+
 .jitter {
 	animation: jitter 0.1s infinite;
 }
