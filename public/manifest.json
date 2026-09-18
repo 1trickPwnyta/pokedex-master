@@ -1,0 +1,22 @@
+{
+	"short_name": "pokedex-master",
+	"name": "Pokédex Master",
+	"icons": [
+		{
+			"src": "icon-192.png",
+			"type": "image/png",
+			"sizes": "192x192",
+			"purpose": "any maskable"
+		},
+		{
+			"src": "icon-512.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		}
+	],
+	"start_url": "/pokedex-master/",
+	"background_color": "#3A3622",
+	"theme_color": "#3A3622",
+	"display": "standalone",
+	"orientation": "portrait"
+}
