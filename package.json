@@ -2,13 +2,17 @@
   "name": "pokedex-master",
   "version": "0.2.2",
   "author": "1trickPwnyta",
+  "type": "module",
   "scripts": {
-	"prestart": "node -e \"fs.writeFileSync('./static/meta.json', JSON.stringify({ version: require('./package.json').version }))\"",
-	"start": "http-server ./static -a 0.0.0.0 -p 80 -d false -s",
-	"pretest": "npm run prestart",
-	"test": "http-server ./static -c-1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^8.3.0"
   },
   "dependencies": {
-    "http-server": "^14.1.1"
+    "array-shuffle": "^4.1.0",
+    "dayjs": "^1.11.23"
   }
 }

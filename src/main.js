@@ -1,7 +1,10 @@
-import arrayShuffle from "https://esm.sh/array-shuffle@3.0.0";
-import dayjs from "https://esm.sh/dayjs@1";
-import duration from "https://esm.sh/dayjs@1/plugin/duration";
+import arrayShuffle from "array-shuffle";
+import dayjs from "dayjs";
+import duration from "dayjs/plugin/duration";
 dayjs.extend(duration);
+import meta from "./meta.json";
+import data from "./data.json";
+import pokemon from "./pokemon.json";
 
 const MAIN = document.getElementById("main");
 const TIMER = document.getElementById("timer");
@@ -32,15 +35,6 @@ let board;
 let startTime;
 let timerUpdate;
 
-let metaFetch = await fetch("./meta.json");
-let meta = await metaFetch.json();
-
-let pokemonFetch = await fetch("./pokemon.json");
-let pokemon = await pokemonFetch.json();
-
-let dataFetch = await fetch("./data.json");
-let data = await dataFetch.json();
-
 const options = [];
 addOption(OPTION_START);
 
@@ -48,6 +42,10 @@ const dialogStack = [];
 
 addSetting(OPTION_HELP);
 addSetting(OPTION_SETTINGS);
+
+cacheImage("./alert-circle.png");
+cacheImage("./checkbox-marked.png");
+cacheImage("./close-box.png");
 
 if (!localStorage.generations || !JSON.parse(localStorage.generations).length) {
 	localStorage.generations = JSON.stringify([ data.generations[0].name ]);
@@ -425,7 +423,7 @@ function closeMessage(callback = () => {}) {
 
 function showHelp() {
 	doDialog({
-		title: `Pokédex Master v${meta.version}`,
+		title: `Pokédex Master v${__APP_VERSION__}`,
 		subtitle: "by 1trickPwnyta",
 		message: `<p>So you can name all the Pokémon in dex order from memory and you think you're real smart, huh? But can you name them all <em>by dex number</em> in random order?</p>
 <p>The path to Pokédex mastery is long and difficult. Do you have what it takes?</p>`
