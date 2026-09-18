@@ -239,7 +239,14 @@ function stopGame() {
 function win() {
 	SOUND_WIN.play();
 	stopGame();
-	setQuestion(`Good job!<br />You named ${board.length} Pokémon in ${TIMER.innerText}.`);
+	const generations = JSON.parse(localStorage.generations);
+	let winCount = board.length;
+	if (generations.length == 1) {
+		winCount = `every ${generations[0]}`;
+	} else if (generations.length == 9) {
+		winCount = "every";
+	}
+	setQuestion(`Good job!<br />You named ${winCount} Pokémon in ${TIMER.innerText}.`);
 }
 
 function buildBoard() {
