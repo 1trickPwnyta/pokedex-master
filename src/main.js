@@ -52,8 +52,8 @@ await cacheBackground(IMAGE_NO_IMAGE);
 await cacheBackground(IMAGE_CLOSE_BOX);
 await cacheBackground(IMAGE_CHECKBOX_CHECKED, "--checkbox-checked");
 
-if (!localStorage.generations || !JSON.parse(localStorage.generations).length) {
-	localStorage.generations = JSON.stringify([ data.generations[0].name ]);
+if (!localStorage.pokedex_master_generations || !JSON.parse(localStorage.pokedex_master_generations).length) {
+	localStorage.pokedex_master_generations = localStorage.generations ?? JSON.stringify([ data.generations[0].name ]);
 }
 
 MAIN.style.visibility = "visible";
@@ -261,7 +261,7 @@ function stopGame() {
 function win() {
 	SOUND_WIN.play();
 	stopGame();
-	const generations = JSON.parse(localStorage.generations);
+	const generations = JSON.parse(localStorage.pokedex_master_generations);
 	let winCount = board.length;
 	if (generations.length == 1) {
 		winCount = `every ${generations[0]}`;
@@ -272,7 +272,7 @@ function win() {
 }
 
 function buildBoard() {
-	const generations = JSON.parse(localStorage.generations);
+	const generations = JSON.parse(localStorage.pokedex_master_generations);
 	board = [];
 	for (const generation of data.generations.filter(g => generations.includes(g.name))) {
 		board = [ ...board, ...Array.from({ length: generation.range[1] - generation.range[0] + 1 }, (_, i) =>  generation.range[0] + i) ];
@@ -473,11 +473,11 @@ function showSettings() {
 	const element = document.createElement("div");
 	
 	const generationsButton = makeButton("Generations", null, () => {
-		const selected = JSON.parse(localStorage.generations);
+		const selected = JSON.parse(localStorage.pokedex_master_generations);
 		choices("Generations", data.generations.map(g => {
 			return { value: g.name, selected: selected.includes(g.name) };
 		}), selections => {
-			localStorage.generations = JSON.stringify(selections);
+			localStorage.pokedex_master_generations = JSON.stringify(selections);
 		}, null, 1);
 	});
 	element.appendChild(generationsButton);
