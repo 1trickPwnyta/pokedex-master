@@ -43,9 +43,9 @@ const dialogStack = [];
 addSetting(OPTION_HELP);
 addSetting(OPTION_SETTINGS);
 
-await cacheImage("./alert-circle.png");
-await cacheImage("./checkbox-marked.png");
-await cacheImage("./close-box.png");
+await cacheImage(new URL("./alert-circle.png", import.meta.url).href);
+await cacheImage(new URL("./checkbox-marked.png", import.meta.url).href);
+await cacheImage(new URL("./close-box.png", import.meta.url).href);
 
 if (!localStorage.generations || !JSON.parse(localStorage.generations).length) {
 	localStorage.generations = JSON.stringify([ data.generations[0].name ]);
