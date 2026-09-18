@@ -2,11 +2,11 @@ import arrayShuffle from "array-shuffle";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 dayjs.extend(duration);
-import meta from "./meta.json";
 import data from "./data.json";
 import pokemon from "./pokemon.json";
 
 const MAIN = document.getElementById("main");
+const LOADING = document.getElementById("loading");
 const TIMER = document.getElementById("timer");
 const QUESTION_TEXT = document.getElementById("question-text");
 const QUESTION_IMAGE = document.getElementById("question-image");
@@ -50,6 +50,10 @@ await cacheImage(new URL("./close-box.png", import.meta.url).href);
 if (!localStorage.generations || !JSON.parse(localStorage.generations).length) {
 	localStorage.generations = JSON.stringify([ data.generations[0].name ]);
 }
+
+MAIN.style.visibility = "visible";
+LOADING.style.opacity = "0";
+setTimeout(() => document.body.removeChild(LOADING), 1000);
 
 function flushStyle(element) {
 	void element.offsetHeight;
