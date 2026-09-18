@@ -43,9 +43,9 @@ const dialogStack = [];
 addSetting(OPTION_HELP);
 addSetting(OPTION_SETTINGS);
 
-cacheImage("./alert-circle.png");
-cacheImage("./checkbox-marked.png");
-cacheImage("./close-box.png");
+await cacheImage("./alert-circle.png");
+await cacheImage("./checkbox-marked.png");
+await cacheImage("./close-box.png");
 
 if (!localStorage.generations || !JSON.parse(localStorage.generations).length) {
 	localStorage.generations = JSON.stringify([ data.generations[0].name ]);
@@ -55,10 +55,11 @@ function flushStyle(element) {
 	void element.offsetHeight;
 }
 
-function cacheImage(url) {
+async function cacheImage(url) {
 	const image = new Image();
 	image.fetchPriority = "high";
 	image.src = url;
+	await image.decode();
 }
 
 function jitter(element) {
