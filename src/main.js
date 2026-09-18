@@ -58,7 +58,7 @@ function flushStyle(element) {
 async function cacheImage(url) {
 	const image = new Image();
 	image.fetchPriority = "high";
-	image.src = url;
+	image.src = new URL(url, import.meta.url).href;
 	await image.decode();
 }
 
@@ -86,7 +86,7 @@ function makeButton(text, image, action) {
 	button.innerText = text ?? "";
 	if (image) {
 		const icon = document.createElement("div");
-		icon.style.maskImage = `url('${image}')`;
+		icon.style.maskImage = `url('${new URL(image, import.meta.url).href}')`;
 		button.appendChild(icon);
 	}
 	button.onclick = () => {
