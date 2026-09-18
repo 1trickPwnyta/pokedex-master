@@ -2,11 +2,16 @@ import arrayShuffle from "array-shuffle";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 dayjs.extend(duration);
-import meta from "./meta.json";
+
 import data from "./data.json";
 import pokemon from "./pokemon.json";
 
+import IMAGE_CLOSE_BOX from "./close-box.png?inline";
+import IMAGE_CHECKBOX_CHECKED from "./checkbox-marked.png?inline";
+import IMAGE_NO_IMAGE from "./alert-circle.png?inline";
+
 const MAIN = document.getElementById("main");
+const LOADING = document.getElementById("loading");
 const TIMER = document.getElementById("timer");
 const QUESTION_TEXT = document.getElementById("question-text");
 const QUESTION_IMAGE = document.getElementById("question-image");
@@ -43,13 +48,17 @@ const dialogStack = [];
 addSetting(OPTION_HELP);
 addSetting(OPTION_SETTINGS);
 
-await cacheImage(new URL("./alert-circle.png", import.meta.url).href);
-await cacheImage(new URL("./checkbox-marked.png", import.meta.url).href);
-await cacheImage(new URL("./close-box.png", import.meta.url).href);
+await cacheBackground(IMAGE_NO_IMAGE);
+await cacheBackground(IMAGE_CLOSE_BOX);
+await cacheBackground(IMAGE_CHECKBOX_CHECKED, "--checkbox-checked");
 
 if (!localStorage.generations || !JSON.parse(localStorage.generations).length) {
 	localStorage.generations = JSON.stringify([ data.generations[0].name ]);
 }
+
+MAIN.style.visibility = "visible";
+LOADING.style.opacity = "0";
+setTimeout(() => document.body.removeChild(LOADING), 1000);
 
 function flushStyle(element) {
 	void element.offsetHeight;
@@ -57,12 +66,29 @@ function flushStyle(element) {
 
 async function cacheImage(url) {
 	const image = new Image();
-	image.fetchPriority = "high";
-	if (!url.startsWith("data:")) {
-		await fetch(url);
-	}
 	image.src = url;
 	await image.decode();
+}
+
+async function cacheBackground(url, varName) {
+	if (varName) {
+		document.documentElement.style.setProperty(varName, `url(${url})`);
+	}
+	return new Promise(resolve => {
+		const image = document.createElement("div");
+		image.style.maskImage = `url(${url})`;
+		image.style.position = "fixed";
+		image.style.left = "-100vw";
+		image.style.top = "-100vw";
+		document.body.appendChild(image);
+		window.getComputedStyle(image).maskImage;
+		requestAnimationFrame(() => {
+			requestAnimationFrame(() => {
+				image.remove();
+				resolve();
+			});
+		});
+	});
 }
 
 function jitter(element) {
@@ -76,7 +102,7 @@ function getSpriteUrl(number, pokemon) {
 			return `${generation.sprite_prefix}${pokemon.imageId ?? pokemon.name.toLowerCase()}${generation.sprite_suffix}`;
 		}
 	}
-	return "./alert-circle.png";
+	return IMAGE_NO_IMAGE;
 }
 
 function getCurrentPokemon() {
@@ -235,7 +261,14 @@ function stopGame() {
 function win() {
 	SOUND_WIN.play();
 	stopGame();
-	setQuestion(`Good job!<br />You named ${board.length} Pokémon in ${TIMER.innerText}.`);
+	const generations = JSON.parse(localStorage.generations);
+	let winCount = board.length;
+	if (generations.length == 1) {
+		winCount = `every ${generations[0]}`;
+	} else if (generations.length == 9) {
+		winCount = "every";
+	}
+	setQuestion(`Good job!<br />You named ${winCount} Pokémon in ${TIMER.innerText}.`);
 }
 
 function buildBoard() {
@@ -256,7 +289,9 @@ function nextLevel() {
 	
 	if (level < board.length) {
 		setQuestion("", board[level]);
-		cacheImage(getSpriteUrl(board[level], getCurrentPokemon()));
+		const url = getSpriteUrl(board[level], getCurrentPokemon());
+		cacheImage(url);
+		cacheBackground(url);
 	} else {
 		win();
 	}
@@ -345,7 +380,7 @@ function doDialog(options) {
 		messageBox.appendChild(buttonArea);
 	}
 	
-	let messageClose = makeButton("", new URL("./close-box.png", import.meta.url).href, () => closeMessage(options.onCancel));
+	let messageClose = makeButton("", IMAGE_CLOSE_BOX, () => closeMessage(options.onCancel));
 	messageClose.classList.add("message-close");
 	messageBox.appendChild(messageClose);
 	
