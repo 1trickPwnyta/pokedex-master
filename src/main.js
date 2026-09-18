@@ -56,11 +56,12 @@ function flushStyle(element) {
 }
 
 async function cacheImage(url) {
-	const response = await fetch(url);
-	const blob = await response.blob();
 	const image = new Image();
 	image.fetchPriority = "high";
-	image.src = URL.createObjectURL(blob);
+	if (!url.startsWith("data:")) {
+		await fetch(url);
+	}
+	image.src = url;
 	await image.decode();
 }
 
