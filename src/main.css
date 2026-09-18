@@ -358,7 +358,7 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:checked {
-	mask-image: url("./checkbox-marked.png");
+	mask-image: var(--checkbox-checked);
 	mask-size: contain;
 	mask-repeat: no-repeat;
 	mask-position: center;
