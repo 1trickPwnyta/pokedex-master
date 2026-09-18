@@ -22,8 +22,8 @@ const MESSAGE_BACKGROUND = document.getElementById("message-background");
 const OPTION_START = { text: "Start", action: onOptionStart };
 const OPTION_GIVEUP = { text: "Give up", action: onOptionGiveUp };
 const OPTION_RESTART = { text: "Restart", action: onOptionRestart };
-const OPTION_HELP = { image: "./help-box.png", action: onOptionHelp };
-const OPTION_SETTINGS = { image: "./cog-box.png", action: onOptionSettings };
+const OPTION_HELP = { image: new URL("./help-box.png", import.meta.url).href, action: onOptionHelp };
+const OPTION_SETTINGS = { image: new URL("./cog-box.png", import.meta.url).href, action: onOptionSettings };
 
 const SOUND_CLICK = new Audio("./click.wav");
 const SOUND_REJECT = new Audio("./reject.wav");
@@ -58,7 +58,7 @@ function flushStyle(element) {
 async function cacheImage(url) {
 	const image = new Image();
 	image.fetchPriority = "high";
-	image.src = new URL(url, import.meta.url).href;
+	image.src = url;
 	await image.decode();
 }
 
@@ -86,7 +86,7 @@ function makeButton(text, image, action) {
 	button.innerText = text ?? "";
 	if (image) {
 		const icon = document.createElement("div");
-		icon.style.maskImage = `url('${new URL(image, import.meta.url).href}')`;
+		icon.style.maskImage = `url('${image}')`;
 		button.appendChild(icon);
 	}
 	button.onclick = () => {
@@ -342,7 +342,7 @@ function doDialog(options) {
 		messageBox.appendChild(buttonArea);
 	}
 	
-	let messageClose = makeButton("", "./close-box.png", () => closeMessage(options.onCancel));
+	let messageClose = makeButton("", new URL("./close-box.png", import.meta.url).href, () => closeMessage(options.onCancel));
 	messageClose.classList.add("message-close");
 	messageBox.appendChild(messageClose);
 	
