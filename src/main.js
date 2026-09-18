@@ -25,10 +25,10 @@ const OPTION_RESTART = { text: "Restart", action: onOptionRestart };
 const OPTION_HELP = { image: new URL("./help-box.png", import.meta.url).href, action: onOptionHelp };
 const OPTION_SETTINGS = { image: new URL("./cog-box.png", import.meta.url).href, action: onOptionSettings };
 
-const SOUND_CLICK = new Audio("./click.wav");
-const SOUND_REJECT = new Audio("./reject.wav");
-const SOUND_GIVEUP = new Audio("./giveup.wav");
-const SOUND_WIN = new Audio("./win.wav");
+const SOUND_CLICK = new Audio(new URL("./click.wav", import.meta.url).href);
+const SOUND_REJECT = new Audio(new URL("./reject.wav", import.meta.url).href);
+const SOUND_GIVEUP = new Audio(new URL("./giveup.wav", import.meta.url).href);
+const SOUND_WIN = new Audio(new URL("./win.wav", import.meta.url).href);
 
 let level;
 let board;
