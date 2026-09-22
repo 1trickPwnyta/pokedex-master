@@ -249,7 +249,7 @@ body {
 }
 
 .option div {
-	mask-size: contain;
+	mask-size: auto 102%;
 	mask-repeat: no-repeat;
 	mask-position: center;
 	background-color: #3A3622;
@@ -341,7 +341,7 @@ body {
 	transform: initial;
 }
 
-.dialog-choice {
+.dialog-checkboxes {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -354,7 +354,6 @@ input[type="checkbox"] {
 	aspect-ratio: 1;
 	border: 0.5vh #3A3622 solid;
 	border-radius: 1vh;
-	cursor: pointer;
 }
 
 input[type="checkbox"]:checked {
@@ -365,8 +364,22 @@ input[type="checkbox"]:checked {
 	background-color: #3A3622;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+input[type=number] {
+	-moz-appearance: textfield;
+}
+
 .settings-main {
 	padding-top: 1vh;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 1vh;
 }
 
 .settings-bottom {

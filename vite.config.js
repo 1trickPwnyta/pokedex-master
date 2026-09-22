@@ -2,6 +2,11 @@ import { defineConfig } from "vite";
 import pkg from "./package.json" assert { type: "json" };
 
 export default defineConfig({
+	server: {
+		port: 8080,
+		host: true,
+		strictPort: true
+	},
 	root: "src",
 	base: "/pokedex-master",
 	publicDir: "../public",

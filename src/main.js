@@ -6,6 +6,7 @@ dayjs.extend(duration);
 import data from "./data.json";
 import pokemon from "./pokemon.json";
 
+import IMAGE_ICON from "./icon.png";
 import IMAGE_CLOSE_BOX from "./close-box.png?inline";
 import IMAGE_CHECKBOX_CHECKED from "./checkbox-marked.png?inline";
 import IMAGE_SOUND_ON from "./volume-high.png?inline";
@@ -21,6 +22,7 @@ const PROGRESS = document.getElementById("progress");
 const COLLECTION = document.getElementById("collection-container");
 const ANSWER = document.getElementById("answer");
 const ANSWER_BOX = document.getElementById("answer-box");
+const ANSWER_TEXT = document.getElementById("answer-text");
 const ANSWER_FIELD = document.getElementById("answer-field");
 const OPTIONS = document.getElementById("options");
 const SETTINGS = document.getElementById("settings");
@@ -37,9 +39,9 @@ const SOUND_REJECT = loadAudio(new URL("./reject.wav", import.meta.url).href);
 const SOUND_GIVEUP = loadAudio(new URL("./giveup.wav", import.meta.url).href);
 const SOUND_WIN = loadAudio(new URL("./win.wav", import.meta.url).href);
 
-let muteAudio = localStorage.pokedex_master_muteAudio ?? false;
+let muteAudio = localStorage.pokedex_master_muteAudio ? JSON.parse(localStorage.pokedex_master_muteAudio) : false;
 
-let level;
+let level = -1;
 let board;
 let startTime;
 let timerUpdate;
@@ -52,19 +54,25 @@ const dialogStack = [];
 addSetting(OPTION_HELP);
 addSetting(OPTION_SETTINGS);
 
-await cacheBackground(IMAGE_NO_IMAGE);
-await cacheBackground(IMAGE_CLOSE_BOX);
-await cacheBackground(IMAGE_CHECKBOX_CHECKED, "--checkbox-checked");
-await cacheBackground(IMAGE_SOUND_ON);
-await cacheBackground(IMAGE_SOUND_OFF);
+await cacheImage(IMAGE_ICON);
+await cacheBackground(IMAGE_NO_IMAGE, null, true);
+await cacheBackground(IMAGE_CLOSE_BOX, null, true);
+await cacheBackground(IMAGE_CHECKBOX_CHECKED, "--checkbox-checked", true);
+await cacheBackground(IMAGE_SOUND_ON, null, true);
+await cacheBackground(IMAGE_SOUND_OFF, null, true);
 
 if (!localStorage.pokedex_master_generations || !JSON.parse(localStorage.pokedex_master_generations).length) {
 	localStorage.pokedex_master_generations = localStorage.generations ?? JSON.stringify([ data.generations[0].name ]);
+}
+if (!localStorage.pokedex_master_gameplay) {
+	localStorage.pokedex_master_gameplay = JSON.stringify({});
 }
 
 MAIN.style.visibility = "visible";
 LOADING.style.opacity = "0";
 setTimeout(() => document.body.removeChild(LOADING), 1000);
+
+buildBoard();
 
 function flushStyle(element) {
 	void element.offsetHeight;
@@ -76,18 +84,23 @@ async function cacheImage(url) {
 	await image.decode();
 }
 
-async function cacheBackground(url, varName) {
+async function cacheBackground(url, varName, mask) {
 	if (varName) {
 		document.documentElement.style.setProperty(varName, `url(${url})`);
 	}
 	return new Promise(resolve => {
 		const image = document.createElement("div");
-		image.style.maskImage = `url(${url})`;
+		if (mask) {
+			image.style.maskImage = `url(${url})`;
+		} else {
+			image.style.backgroundImage = `url(${url})`;
+		}
 		image.style.position = "fixed";
 		image.style.left = "-100vw";
 		image.style.top = "-100vw";
 		document.body.appendChild(image);
 		window.getComputedStyle(image).maskImage;
+		window.getComputedStyle(image).backgroundImage;
 		requestAnimationFrame(() => {
 			requestAnimationFrame(() => {
 				image.remove();
@@ -118,6 +131,10 @@ function getSpriteUrl(number, pokemon) {
 		}
 	}
 	return IMAGE_NO_IMAGE;
+}
+
+function getPokemon(number) {
+	return pokemon[number - 1];
 }
 
 function getCurrentPokemon() {
@@ -175,8 +192,13 @@ function simplifyName(name) {
 	return name.toLowerCase().replaceAll(/[^a-z0-9]/g, "");
 }
 
+function getReverseMode() {
+	return JSON.parse(localStorage.pokedex_master_gameplay).reverseMode ?? false;
+}
+
 function onAnswerInput() {
-	if (simplifyName(ANSWER_FIELD.value) == simplifyName(getCurrentPokemon().name)) {
+	const answer = getReverseMode() ? board[level] : simplifyName(getCurrentPokemon().name);
+	if (simplifyName(ANSWER_FIELD.value) == answer) {
 		ANSWER_FIELD.value = "";
 		blinkAnswerField();
 		nextLevel();
@@ -190,13 +212,17 @@ function onOptionStart() {
 function onOptionGiveUp() {
 	confirm("You really want to give up?", () => {
 		SOUND_GIVEUP.play();
+		if (getReverseMode()) {
+			setQuestion(`It was`, board[level], null, "giveup-x", "giveup-y");
+		} else {
+			setQuestion(`It was ${getCurrentPokemon().name}!`, null, getSpriteUrl(board[level], getCurrentPokemon()), "giveup-x", "giveup-y");
+		}
 		stopGame();
-		setQuestion(`It was ${getCurrentPokemon().name}!`, 0, getSpriteUrl(board[level], getCurrentPokemon()), "giveup-x", "giveup-y");
 	});
 }
 
 function onOptionRestart() {
-	startGame();
+	restartGame();
 }
 
 function onOptionHelp() {
@@ -258,7 +284,11 @@ function clearCollection() {
 function startGame() {
 	removeAllOptions();
 	addOption(OPTION_GIVEUP);
-	buildBoard();
+	ANSWER_FIELD.type = getReverseMode() ? "number" : "text";
+	ANSWER_TEXT.innerText = getReverseMode() ? "What number is it?" : "Which Pokémon is it?";
+	if (!board || !board.length) {
+		buildBoard();
+	}
 	level = -1;
 	showAnswerBox();
 	clearCollection();
@@ -266,6 +296,21 @@ function startGame() {
 	startTime = new Date();
 	updateTimer();
 	timerUpdate = setInterval(updateTimer, 1000);
+}
+
+function restartGame() {
+	startGame();
+}
+
+function resetGame() {
+	stopGame();
+	removeAllOptions();
+	addOption(OPTION_START);
+	setQuestion("Welcome to<br />Pokédex Master", null, IMAGE_ICON);
+	clearCollection();
+	TIMER.innerHTML = "";
+	PROGRESS.innerHTML = "";
+	level = -1;
 }
 
 function stopGame() {
@@ -276,6 +321,7 @@ function stopGame() {
 		clearInterval(timerUpdate);
 		timerUpdate = null;
 	}
+	buildBoard();
 }
 
 function win() {
@@ -288,7 +334,7 @@ function win() {
 	} else if (generations.length == 9) {
 		winCount = "every";
 	}
-	setQuestion(`Good job!<br />You named ${winCount} Pokémon in ${TIMER.innerText}.`);
+	setQuestion(`Good job!<br />You ${getReverseMode() ? "numbered" : "named"} ${winCount} Pokémon in ${TIMER.innerText}.`);
 }
 
 function buildBoard() {
@@ -298,6 +344,9 @@ function buildBoard() {
 		board = [ ...board, ...Array.from({ length: generation.range[1] - generation.range[0] + 1 }, (_, i) =>  generation.range[0] + i) ];
 	}
 	board = arrayShuffle(board);
+	const url = getSpriteUrl(board[0], getPokemon(board[0]));
+	cacheImage(url);
+	cacheBackground(url);
 }
 
 function nextLevel() {
@@ -308,29 +357,39 @@ function nextLevel() {
 	updateProgress();
 	
 	if (level < board.length) {
-		setQuestion("", board[level]);
-		const url = getSpriteUrl(board[level], getCurrentPokemon());
-		cacheImage(url);
-		cacheBackground(url);
+		const currentPokemon = getCurrentPokemon();
+		const url = getSpriteUrl(board[level], currentPokemon);
+		if (!getReverseMode()) {
+			setQuestion("", board[level]);
+			cacheImage(url);
+			cacheBackground(url);
+		} else {
+			setQuestion(currentPokemon.name, null, url);
+			if (level < board.length - 1) {
+				const nextUrl = getSpriteUrl(board[level + 1], getPokemon(board[level + 1]));
+				cacheImage(nextUrl);
+				cacheBackground(nextUrl);
+			}
+		}
 	} else {
 		win();
 	}
 }
 
-function setQuestion(text, number, image, outerImageClass, innerImageClass) {
+function setQuestion(text, number, image, outerClass, innerClass) {
 	clearQuestion();
 	QUESTION_TEXT.innerHTML = text;
 	if (number) {
 		let questionNumber = document.createElement("div");
-		questionNumber.className = "question-number";
-		questionNumber.innerText = number;
+		questionNumber.className = `question-number ${outerClass}`;
+		questionNumber.innerHTML = `<div class="${innerClass ?? ""}">${number}</div>`;
 		QUESTION_TEXT.appendChild(questionNumber);
 	}
 	QUESTION_IMAGE.className = "";
 	if (image) {
 		QUESTION_IMAGE.style.display = "initial";
-		QUESTION_IMAGE.className = outerImageClass ?? "";
-		QUESTION_IMAGE.innerHTML = `<img src="${image}" class="${innerImageClass ?? ""}" />`;
+		QUESTION_IMAGE.className = outerClass ?? "";
+		QUESTION_IMAGE.innerHTML = `<img src="${image}" class="${innerClass ?? ""}" />`;
 	}
 }
 
@@ -357,6 +416,24 @@ function blinkAnswerField() {
 	ANSWER_FIELD.style.boxShadow = normalShadow;
 	flushStyle(ANSWER_FIELD);
 	ANSWER_FIELD.style.transition = "";
+}
+
+function promptRestart(callback) {
+	if (level >= 0) {
+		doDialog({
+			message: "You've changed settings that require you to restart the game.",
+			buttons: [
+				makeButton("Restart", null, () => {
+					closeMessage(callback);
+					resetGame();
+				}),
+				makeButton("Cancel", null, closeMessage)
+			]
+		});
+	} else {
+		callback();
+		resetGame();
+	}
 }
 
 function doDialog(options) {
@@ -414,50 +491,78 @@ function confirm(message, onYes, onNo, onCancel) {
 	doDialog({ title: message, buttons: [ yesButton, noButton ], onCancel: onCancel });
 }
 
-function choices(title, choices, onSubmit, onCancel, minSelections) {
+function makeCheckbox(value, checked, onclick, validate) {
+	const checkbox = document.createElement("input");
+	
+	const clickAction = () => {
+		if (validate) {
+			if (!validate(checkbox)) {
+				checkbox.checked = !checkbox.checked;
+				SOUND_REJECT.play();
+				jitter(checkbox);
+				return;
+			}
+		}
+		if (onclick) {
+			onclick(checkbox);
+		}
+		SOUND_CLICK.play();
+	};
+	
+	checkbox.type = "checkbox";
+	checkbox.value = value;
+	checkbox.onclick = clickAction;
+	checkbox.checked = checked;
+	checkbox.style.cursor = "pointer";
+	
+	const label = document.createElement("label");
+	label.innerText = value;
+	label.onclick = () => {
+		checkbox.checked = !checkbox.checked;
+		clickAction();
+	};
+	label.style.cursor = "pointer";
+	
+	return [ checkbox, label ];
+}
+
+function choices(title, choices, onSubmit, onCancel, minSelections, requireRestart) {
 	const checkboxes = [];
 	
 	const element = document.createElement("div");
 	for (const choice of choices) {
 		const choiceElement = document.createElement("div");
-		choiceElement.className = "dialog-choice";
+		choiceElement.className = "dialog-checkboxes";
 		
-		const click = () => {
-			if (minSelections
-				&& choiceCheckbox.checked
-				&& checkboxes.filter(c => c.checked).length <= minSelections) {
-				SOUND_REJECT.play();
-				jitter(choiceCheckbox);
-			} else {
-				SOUND_CLICK.play();
-				choiceCheckbox.checked = !choiceCheckbox.checked;
-			}
-		};
-		
-		const choiceCheckbox = document.createElement("input");
-		choiceCheckbox.type = "checkbox";
-		choiceCheckbox.value = choice.value;
-		choiceCheckbox.id = `choices-${choice.value}`;
-		choiceCheckbox.onclick = e => {
-			choiceCheckbox.checked = !choiceCheckbox.checked;
-			click();
-		};
-		choiceCheckbox.checked = choice.selected;
+		const [ choiceCheckbox, choiceLabel ] = makeCheckbox(
+			choice.value,
+			choice.selected,
+			null,
+			checkbox =>
+				!minSelections
+				|| checkbox.checked
+				|| checkboxes.filter(c => c.checked).length >= minSelections
+		);
 		choiceElement.appendChild(choiceCheckbox);
 		checkboxes.push(choiceCheckbox);
-		
-		const choiceLabel = document.createElement("label");
-		choiceLabel.for = choiceCheckbox.id;
-		choiceLabel.innerText = choice.value;
-		choiceLabel.onclick = click;
 		choiceElement.appendChild(choiceLabel);
 		
 		element.appendChild(choiceElement);
 	}
 	
-	const submitButton = makeButton("Save", null, () => closeMessage(() => {
-		onSubmit(checkboxes.filter(c => c.checked).map(c => c.value));
-	}));
+	const submitButton = makeButton("Save", null, () => {
+		const callback = () => onSubmit(checkboxes.filter(c => c.checked).map(c => c.value));
+		if (requireRestart && !choices
+				.filter(c => c.selected)
+				.map(c => c.value)
+				.every((v, i) => v === checkboxes
+						.filter(c => c.checked)
+						.map(c => c.value)[i])) {
+			promptRestart(() => closeMessage(callback));
+		} else {
+			closeMessage(callback);
+		}
+	});
 	const cancelButton = makeButton("Cancel", null, () => closeMessage(onCancel));
 	
 	doDialog({
@@ -499,9 +604,39 @@ function showSettings() {
 			return { value: g.name, selected: selected.includes(g.name) };
 		}), selections => {
 			localStorage.pokedex_master_generations = JSON.stringify(selections);
-		}, null, 1);
+		}, null, 1, true);
 	});
 	element.appendChild(generationsButton);
+	
+	const gameplayButton = makeButton("Gameplay", null, () => {
+		const gameplay = JSON.parse(localStorage.pokedex_master_gameplay);
+		
+		const gameplayElement = document.createElement("div");
+		gameplayElement.className = "dialog-checkboxes";
+		const [ reverseModeCheckbox, reverseModeLabel ] = makeCheckbox("Reverse mode", gameplay.reverseMode);
+		gameplayElement.appendChild(reverseModeCheckbox);
+		gameplayElement.appendChild(reverseModeLabel);
+		
+		const submitButton = makeButton("Save", null, () => {
+			if (gameplay.reverseMode != reverseModeCheckbox.checked) {
+				promptRestart(() => {
+					gameplay.reverseMode = reverseModeCheckbox.checked;
+					localStorage.pokedex_master_gameplay = JSON.stringify(gameplay);
+					closeMessage();
+				});
+			} else {
+				closeMessage();
+			}
+		});
+		const cancelButton = makeButton("Cancel", null, closeMessage);
+		
+		doDialog({
+			title: "Gameplay",
+			element: gameplayElement,
+			buttons: [ submitButton, cancelButton ]
+		});
+	});
+	element.appendChild(gameplayButton);
 	
 	const bottom = document.createElement("div");
 	bottom.className = "settings-bottom";
