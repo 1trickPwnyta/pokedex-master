@@ -3,15 +3,15 @@ import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 dayjs.extend(duration);
 
-import data from "./data.json";
-import pokemon from "./pokemon.json";
+import data from "../data/data.json";
+import pokemon from "../data/pokemon.json";
 
-import IMAGE_ICON from "./icon.png";
-import IMAGE_CLOSE_BOX from "./close-box.png?inline";
-import IMAGE_CHECKBOX_CHECKED from "./checkbox-marked.png?inline";
-import IMAGE_SOUND_ON from "./volume-high.png?inline";
-import IMAGE_SOUND_OFF from "./volume-off.png?inline";
-import IMAGE_NO_IMAGE from "./alert-circle.png?inline";
+import IMAGE_ICON from "../graphics/icon.png";
+import IMAGE_CLOSE_BOX from "../graphics/close-box.png?inline";
+import IMAGE_CHECKBOX_CHECKED from "../graphics/checkbox-marked.png?inline";
+import IMAGE_SOUND_ON from "../graphics/volume-high.png?inline";
+import IMAGE_SOUND_OFF from "../graphics/volume-off.png?inline";
+import IMAGE_NO_IMAGE from "../graphics/alert-circle.png?inline";
 
 const MAIN = document.getElementById("main");
 const LOADING = document.getElementById("loading");
@@ -31,13 +31,13 @@ const MESSAGE_BACKGROUND = document.getElementById("message-background");
 const OPTION_START = { text: "Start", action: onOptionStart };
 const OPTION_GIVEUP = { text: "Give up", action: onOptionGiveUp };
 const OPTION_RESTART = { text: "Restart", action: onOptionRestart };
-const OPTION_HELP = { image: new URL("./help-box.png", import.meta.url).href, action: onOptionHelp };
-const OPTION_SETTINGS = { image: new URL("./cog-box.png", import.meta.url).href, action: onOptionSettings };
+const OPTION_HELP = { image: new URL("../graphics/help-box.png", import.meta.url).href, action: onOptionHelp };
+const OPTION_SETTINGS = { image: new URL("../graphics/cog-box.png", import.meta.url).href, action: onOptionSettings };
 
-const SOUND_CLICK = loadAudio(new URL("./click.wav", import.meta.url).href);
-const SOUND_REJECT = loadAudio(new URL("./reject.wav", import.meta.url).href);
-const SOUND_GIVEUP = loadAudio(new URL("./giveup.wav", import.meta.url).href);
-const SOUND_WIN = loadAudio(new URL("./win.wav", import.meta.url).href);
+const SOUND_CLICK = loadAudio(new URL("../audio/click.wav", import.meta.url).href);
+const SOUND_REJECT = loadAudio(new URL("../audio/reject.wav", import.meta.url).href);
+const SOUND_GIVEUP = loadAudio(new URL("../audio/giveup.wav", import.meta.url).href);
+const SOUND_WIN = loadAudio(new URL("../audio/win.wav", import.meta.url).href);
 
 let muteAudio = localStorage.pokedex_master_muteAudio ? JSON.parse(localStorage.pokedex_master_muteAudio) : false;
 
@@ -197,7 +197,7 @@ function getReverseMode() {
 }
 
 function onAnswerInput() {
-	const answer = getReverseMode() ? board[level] : simplifyName(getCurrentPokemon().name);
+	const answer = !getReverseMode() ? board[level] : simplifyName(getCurrentPokemon().name);
 	if (simplifyName(ANSWER_FIELD.value) == answer) {
 		ANSWER_FIELD.value = "";
 		blinkAnswerField();
@@ -212,10 +212,10 @@ function onOptionStart() {
 function onOptionGiveUp() {
 	confirm("You really want to give up?", () => {
 		SOUND_GIVEUP.play();
-		if (getReverseMode()) {
-			setQuestion(`It was`, board[level], null, "giveup-x", "giveup-y");
+		if (!getReverseMode()) {
+			setQuestion(`${getCurrentPokemon().name} is`, board[level], null, "giveup-x", "giveup-y");
 		} else {
-			setQuestion(`It was ${getCurrentPokemon().name}!`, null, getSpriteUrl(board[level], getCurrentPokemon()), "giveup-x", "giveup-y");
+			setQuestion(`${board[level]} is ${getCurrentPokemon().name}!`, null, getSpriteUrl(board[level], getCurrentPokemon()), "giveup-x", "giveup-y");
 		}
 		stopGame();
 	});
@@ -284,8 +284,8 @@ function clearCollection() {
 function startGame() {
 	removeAllOptions();
 	addOption(OPTION_GIVEUP);
-	ANSWER_FIELD.type = getReverseMode() ? "number" : "text";
-	ANSWER_TEXT.innerText = getReverseMode() ? "What number is it?" : "Which Pokémon is it?";
+	ANSWER_FIELD.type = !getReverseMode() ? "number" : "text";
+	ANSWER_TEXT.innerText = !getReverseMode() ? "What number is it?" : "Which Pokémon is it?";
 	if (!board || !board.length) {
 		buildBoard();
 	}
@@ -321,6 +321,7 @@ function stopGame() {
 		clearInterval(timerUpdate);
 		timerUpdate = null;
 	}
+	level = -1;
 	buildBoard();
 }
 
@@ -334,7 +335,7 @@ function win() {
 	} else if (generations.length == 9) {
 		winCount = "every";
 	}
-	setQuestion(`Good job!<br />You ${getReverseMode() ? "numbered" : "named"} ${winCount} Pokémon in ${TIMER.innerText}.`);
+	setQuestion(`Good job!<br />You ${!getReverseMode() ? "numbered" : "named"} ${winCount} Pokémon in ${TIMER.innerText}.`);
 }
 
 function buildBoard() {
@@ -359,7 +360,7 @@ function nextLevel() {
 	if (level < board.length) {
 		const currentPokemon = getCurrentPokemon();
 		const url = getSpriteUrl(board[level], currentPokemon);
-		if (!getReverseMode()) {
+		if (getReverseMode()) {
 			setQuestion("", board[level]);
 			cacheImage(url);
 			cacheBackground(url);

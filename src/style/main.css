@@ -30,7 +30,7 @@ body {
 	width: 50%;
 	height: 50%;
 	background-color: #2CC3BE;
-	mask-image: url("./loading.png");
+	mask-image: url("../graphics/loading.png");
 	mask-repeat: no-repeat;
 	mask-position: center;
 	mask-size: contain;
