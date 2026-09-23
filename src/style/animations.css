@@ -1,0 +1,65 @@
+@keyframes spin {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
+}
+
+@keyframes bubble-in {
+	0% { transform: scale(0); }
+	75% { transform: scale(1.25); }
+	100% { transform: scale(1); }
+}
+
+@keyframes swirl-x {
+	0% { transform: translateX(-2vh); }
+	50% { transform: translateX(2vh); }
+	100% { transform: translateX(0); }
+}
+
+@keyframes swirl-y {
+	0% { transform: translateY(-2vh); }
+	50% { transform: translateY(2vh); }
+	100% { transform: translateY(0); }
+}
+
+@keyframes jitter {
+	0% { transform: translate(0, 0); }
+	10% { transform: translate(-2px, -2px); }
+	20% { transform: translate(2px, 1px); }
+	30% { transform: translate(-1px, 2px); }
+	40% { transform: translate(1px, -1px); }
+	50% { transform: translate(-2px, 1px); }
+	60% { transform: translate(2px, -1px); }
+	70% { transform: translate(-1px, -2px); }
+	80% { transform: translate(1px, 2px); }
+	90% { transform: translate(-2px, -1px); }
+	100% { transform: translate(0, 0); }
+}
+
+@keyframes fade-out {
+	0% { opacity: 1; }
+	100% { opacity: 0; }
+}
+
+@keyframes grow {
+	0% { transform: scale(1); }
+	100% { transform: scale(2); }
+}
+
+.swirl-x {
+	animation: swirl-x 0.25s cubic-bezier(0.37, 0, 0.63, 1) forwards;
+}
+
+.swirl-y {
+	animation: swirl-y 0.25s cubic-bezier(0.37, 0, 0.63, 1) forwards;
+	animation-delay: -0.05s;
+}
+
+.jitter {
+	animation: jitter 0.1s infinite;
+}
+
+.input-ghost {
+	position: absolute;
+	font-size: 5cqh;
+	animation: fade-out 0.25s ease-out forwards, grow 0.25s ease-out forwards;
+}
