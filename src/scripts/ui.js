@@ -87,4 +87,38 @@ export class UI {
 		
 		return [ checkbox, label ];
 	}
+	
+	static makeDropdown(title, options, selected, callback) {
+		const wrapper = document.createElement("div");
+		wrapper.className = "select-container";
+		
+		const label = document.createElement("label");
+		label.className = "select-label";
+		label.innerText = title;
+		wrapper.appendChild(label);
+		wrapper.appendChild(document.createElement("br"));
+		
+		const selectWrapper = document.createElement("div");
+		selectWrapper.className = "select-wrapper";
+		
+		const dropdown = document.createElement("select");
+		for (const option of options) {
+			const optionElement = document.createElement("option");
+			optionElement.value = optionElement.innerText = option;
+			dropdown.appendChild(optionElement);
+		}
+		dropdown.value = selected;
+		dropdown.onclick = () => Sound.click.play();
+		dropdown.onchange = () => {
+			Sound.click.play();
+			if (callback) {
+				callback(dropdown);
+			}
+		};
+		selectWrapper.appendChild(dropdown);
+		dropdown.element = wrapper;
+		wrapper.appendChild(selectWrapper);
+		
+		return dropdown;
+	}
 };

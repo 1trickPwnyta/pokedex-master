@@ -5,6 +5,7 @@ import IMAGE_CHECKBOX_CHECKED from "../graphics/checkbox-marked.png?inline";
 import IMAGE_CLOSE_BOX from "../graphics/close-box.png?inline";
 import IMAGE_SOUND_ON from "../graphics/volume-high.png?inline";
 import IMAGE_SOUND_OFF from "../graphics/volume-off.png?inline";
+import IMAGE_DROPDOWN_ARROW from "../graphics/chevron-down.png?inline";
 import IMAGE_NO_IMAGE from "../graphics/alert-circle.png?inline";
 
 export class Graphics {
@@ -13,6 +14,7 @@ export class Graphics {
 	static closeBox = IMAGE_CLOSE_BOX;
 	static soundOn = IMAGE_SOUND_ON;
 	static soundOff = IMAGE_SOUND_OFF;
+	static dropdownArrow = IMAGE_DROPDOWN_ARROW;
 	static noImage = IMAGE_NO_IMAGE;
 	
 	static async init() {
@@ -21,6 +23,7 @@ export class Graphics {
 		await Graphics.cacheBackground(IMAGE_CLOSE_BOX, null, true);
 		await Graphics.cacheBackground(IMAGE_CHECKBOX_CHECKED, "--checkbox-checked", true);
 		await Graphics.cacheBackground(IMAGE_SOUND_ON, null, true);
+		await Graphics.cacheBackground(IMAGE_DROPDOWN_ARROW, "--dropdown-arrow", true);
 		await Graphics.cacheBackground(IMAGE_SOUND_OFF, null, true);
 	}
 

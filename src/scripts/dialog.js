@@ -166,15 +166,17 @@ export class Dialog {
 			const gameplay = Settings.getGameplay();
 			
 			const gameplayElement = document.createElement("div");
-			gameplayElement.className = "dialog-checkboxes";
-			const [ reverseModeCheckbox, reverseModeLabel ] = UI.makeCheckbox("Reverse mode", gameplay.reverseMode);
-			gameplayElement.appendChild(reverseModeCheckbox);
-			gameplayElement.appendChild(reverseModeLabel);
+			const modeDropdown = UI.makeDropdown("Game mode", [
+				Settings.normalMode,
+				Settings.reverseMode,
+				Settings.orderedMode
+			], gameplay.mode);
+			gameplayElement.appendChild(modeDropdown.element);
 			
 			const submitButton = UI.makeButtonText("Save", () => {
-				if (gameplay.reverseMode != reverseModeCheckbox.checked) {
+				if (gameplay.mode != modeDropdown.value) {
 					Dialog.promptRestart(() => {
-						Settings.setReverseMode(reverseModeCheckbox.checked);
+						Settings.setGameplayMode(modeDropdown.value);
 						Dialog.closeMessage();
 					});
 				} else {

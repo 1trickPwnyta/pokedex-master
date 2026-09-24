@@ -40,8 +40,8 @@ export class Layout {
 	static startGame() {
 		Layout.removeAllOptions();
 		Layout.addOption(Game.optionGiveup);
-		Layout.answerField.type = !Settings.isReverseMode() ? "number" : "text";
-		Layout.answerText.innerText = !Settings.isReverseMode() ? "What number is it?" : "Which Pokémon is it?";
+		Layout.answerField.type = !Settings.isReverse() ? "number" : "text";
+		Layout.answerText.innerText = !Settings.isReverse() ? "What number is it?" : "Which Pokémon is it?";
 		Layout.showAnswerBox();
 		Layout.clearCollection();
 		Layout.startTimer();
@@ -191,7 +191,7 @@ export class Layout {
 	}
 	
 	static onAnswerInput() {
-		const answer = !Settings.isReverseMode() ? Game.board[Game.level].toString() : Pokemon.simplifyName(Game.getCurrentPokemon().name);
+		const answer = !Settings.isReverse() ? Game.board[Game.level].toString() : Pokemon.simplifyName(Game.getCurrentPokemon().name);
 		const simplified = Pokemon.simplifyName(Layout.answerField.value);
 		const makeGhost = className => {
 			const ghost = document.createElement("div");
@@ -208,7 +208,7 @@ export class Layout {
 			Graphics.blink(Layout.answerField);
 			Game.nextLevel();
 		} else if (!answer.startsWith(simplified)
-				&& (!Settings.isReverseMode() || Pokemon.matchesPokemon(simplified))) {
+				&& (!Settings.isReverse() || Pokemon.matchesPokemon(simplified))) {
 			makeGhost("input-ghost bad mistake jitter");
 			Layout.answerField.value = "";
 			Sound.reject.play();

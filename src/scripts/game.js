@@ -58,7 +58,7 @@ export class Game {
 	static giveUp() {
 		Dialog.confirm("You really want to give up?", () => {
 			Sound.giveup.play();
-			if (!Settings.isReverseMode()) {
+			if (!Settings.isReverse()) {
 				Layout.setQuestion({
 					text: `${Game.getCurrentPokemon().name} is`,
 					number: Game.board[Game.level],
@@ -83,7 +83,9 @@ export class Game {
 		for (const generation of data.generations.filter(g => generations.includes(g.name))) {
 			Game.board = [ ...Game.board, ...Array.from({ length: generation.range[1] - generation.range[0] + 1 }, (_, i) =>  generation.range[0] + i) ];
 		}
-		Game.board = arrayShuffle(Game.board);
+		if (!Settings.isOrderedMode()) {
+			Game.board = arrayShuffle(Game.board);
+		}
 		const url = Graphics.getSpriteUrl(Game.board[0], Pokemon.getPokemon(Game.board[0]));
 		Graphics.cacheImage(url);
 		Graphics.cacheBackground(url);
@@ -100,7 +102,7 @@ export class Game {
 		if (Game.level < Game.board.length) {
 			const currentPokemon = Game.getCurrentPokemon();
 			const url = Graphics.getSpriteUrl(Game.board[Game.level], currentPokemon);
-			if (Settings.isReverseMode()) {
+			if (Settings.isReverse()) {
 				Layout.setQuestion({
 					number: Game.board[Game.level]
 				});
@@ -133,7 +135,7 @@ export class Game {
 			winCount = "every";
 		}
 		Layout.setQuestion({
-			text: `Good job!<br />You ${!Settings.isReverseMode() ? "numbered" : "named"} <span class="good">${winCount} Pokémon</span> in ${Layout.timer.innerText}.<br />Mistakes: <span class="${Game.mistakes ? "bad" : "good"}">${Game.mistakes}</span>`
+			text: `Good job!<br />You ${!Settings.isReverse() ? "numbered" : "named"} <span class="good">${winCount} Pokémon</span> in ${Layout.timer.innerText}.<br />Mistakes: <span class="${Game.mistakes ? "bad" : "good"}">${Game.mistakes}</span>`
 		});
 	}
 };

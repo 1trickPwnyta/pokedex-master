@@ -6,6 +6,10 @@ const GENERATIONS = `${PREFIX}generations`;
 const GAMEPLAY = `${PREFIX}gameplay`;
 
 export class Settings {
+	static normalMode = "Normal";
+	static reverseMode = "Reverse";
+	static orderedMode = "Ordered";
+	
 	static isMuteAudio() {
 		return JSON.parse(localStorage[MUTE_AUDIO] ?? 0) || false;
 	}
@@ -24,16 +28,26 @@ export class Settings {
 	}
 	
 	static getGameplay() {
-		return JSON.parse(localStorage[GAMEPLAY] ?? "{}");
+		const gameplay = JSON.parse(localStorage[GAMEPLAY] ?? "{}");
+		if (gameplay.reverseMode) {
+			gameplay.mode = Settings.reverseMode;
+			gameplay.reverseMode = undefined;
+		}
+		return gameplay;
 	}
 	
-	static isReverseMode() {
-		return Settings.getGameplay().reverseMode ?? false;
-	}
-	
-	static setReverseMode(reverseMode) {
+	static isReverse() {
 		const gameplay = Settings.getGameplay();
-		gameplay.reverseMode = reverseMode;
+		return gameplay.mode == Settings.reverseMode || gameplay.mode == Settings.orderedMode;
+	}
+	
+	static setGameplayMode(mode) {
+		const gameplay = Settings.getGameplay();
+		gameplay.mode = mode;
 		localStorage[GAMEPLAY] = JSON.stringify(gameplay);
+	}
+	
+	static isOrderedMode() {
+		return Settings.getGameplay().mode == Settings.orderedMode;
 	}
 };

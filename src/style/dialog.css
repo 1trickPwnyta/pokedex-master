@@ -95,6 +95,50 @@ input[type=number] {
 	-moz-appearance: textfield;
 }
 
+select {
+	appearance: none;
+	font: inherit;
+	font-size: 4cqh;
+	color: inherit;
+	background-color: inherit;
+	border: 0.75vh #3A3622 solid;
+	border-radius: 1vh;
+	padding-left: 0.5vh;
+	padding-right: 5vh;
+}
+
+.select-container {
+	text-align: left;
+}
+
+.select-wrapper {
+	display: inline-block;
+	position: relative;
+}
+
+.select-wrapper::after {
+	content: "";
+	mask-image: var(--dropdown-arrow);
+	mask-size: contain;
+	mask-repeat: no-repeat;
+	mask-position: center;
+	background-color: #3A3622;
+	position: absolute;
+	right: 0;
+	top: 0;
+	padding: 3vh;
+	pointer-events: none;
+}
+
+option {
+	background-color: #D6CBC2;
+}
+
+.select-label {
+	font-size: 80%;
+	padding-left: 1.25vh;
+}
+
 .settings-main {
 	padding-top: 1vh;
 	display: flex;
