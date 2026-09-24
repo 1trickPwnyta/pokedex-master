@@ -65,6 +65,16 @@ body {
 	color: #D6CBC2;
 }
 
+.good {
+	color: #2CC3BE;
+	text-shadow: 0 0 4px #3A3622;
+}
+
+.bad {
+	color: #E53935;
+	text-shadow: 0 0 4px #3A3622;
+}
+
 .button-area {
 	display: flex;
 	flex-direction: row;

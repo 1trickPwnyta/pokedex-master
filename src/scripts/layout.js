@@ -2,8 +2,10 @@ import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 dayjs.extend(duration);
 
+import { Pokemon } from "./pokemon";
 import { Game } from "./game";
 import { Graphics } from "./graphics";
+import { Sound } from "./sound";
 import { Button } from "./ui";
 import { Dialog } from "./dialog";
 import { Settings } from "./settings";
@@ -189,18 +191,28 @@ export class Layout {
 	}
 	
 	static onAnswerInput() {
-		const answer = !Settings.isReverseMode() ? Game.board[Game.level] : Game.simplifyName(Game.getCurrentPokemon().name);
-		if (Game.simplifyName(Layout.answerField.value) == answer) {
-			const inputGhost = document.createElement("div");
-			inputGhost.className = "input-ghost";
-			inputGhost.style.left = `${Layout.answerField.getBoundingClientRect().left}px`;
-			inputGhost.style.top = `${Layout.answerField.getBoundingClientRect().top}px`;
-			inputGhost.innerText = Layout.answerField.value;
-			Layout.answerBox.appendChild(inputGhost);
-			setTimeout(() => Layout.answerBox.removeChild(inputGhost), 1000);
+		const answer = !Settings.isReverseMode() ? Game.board[Game.level].toString() : Pokemon.simplifyName(Game.getCurrentPokemon().name);
+		const simplified = Pokemon.simplifyName(Layout.answerField.value);
+		const makeGhost = className => {
+			const ghost = document.createElement("div");
+			ghost.className = className;
+			ghost.style.left = `${Layout.answerField.getBoundingClientRect().left}px`;
+			ghost.style.top = `${Layout.answerField.getBoundingClientRect().top}px`;
+			ghost.innerText = Layout.answerField.value;
+			Layout.answerBox.appendChild(ghost);
+			setTimeout(() => Layout.answerBox.removeChild(ghost), 1000);
+		};
+		if (simplified == answer) {
+			makeGhost("input-ghost");
 			Layout.answerField.value = "";
 			Graphics.blink(Layout.answerField);
 			Game.nextLevel();
+		} else if (!answer.startsWith(simplified)
+				&& (!Settings.isReverseMode() || Pokemon.matchesPokemon(simplified))) {
+			makeGhost("input-ghost bad mistake jitter");
+			Layout.answerField.value = "";
+			Sound.reject.play();
+			Game.mistakes++;
 		}
 	}
 };

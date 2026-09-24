@@ -18,6 +18,7 @@ export class Game {
 	static board;
 	static level = -1;
 	static startTime;
+	static mistakes = 0;
 	
 	static init() {
 		Game.buildBoard();
@@ -27,10 +28,6 @@ export class Game {
 		return Pokemon.getPokemon(Game.board[Game.level]);
 	}
 	
-	static simplifyName(name) {
-		return name.toLowerCase().replaceAll(/[^a-z0-9]/g, "");
-	}
-	
 	static start() {
 		Game.startTime = new Date();
 		Layout.startGame();
@@ -38,6 +35,7 @@ export class Game {
 			Game.buildBoard();
 		}
 		Game.level = -1;
+		Game.mistakes = 0;
 		Game.nextLevel();
 	}
 
@@ -135,7 +133,7 @@ export class Game {
 			winCount = "every";
 		}
 		Layout.setQuestion({
-			text: `Good job!<br />You ${!Settings.isReverseMode() ? "numbered" : "named"} ${winCount} Pokémon in ${Layout.timer.innerText}.`
+			text: `Good job!<br />You ${!Settings.isReverseMode() ? "numbered" : "named"} <span class="good">${winCount} Pokémon</span> in ${Layout.timer.innerText}.<br />Mistakes: <span class="${Game.mistakes ? "bad" : "good"}">${Game.mistakes}</span>`
 		});
 	}
 };
