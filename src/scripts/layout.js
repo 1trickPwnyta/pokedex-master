@@ -12,6 +12,7 @@ import { Settings } from "./settings";
 
 const options = [];
 let timerUpdate;
+let countMistakes = true;
 
 export class Layout {
 	static main = document.getElementById("main");
@@ -212,7 +213,11 @@ export class Layout {
 			makeGhost("input-ghost bad mistake jitter");
 			Layout.answerField.value = "";
 			Sound.reject.play();
-			Game.mistakes++;
+			if (countMistakes) {
+				Game.mistakes++;
+				countMistakes = false;
+				setTimeout(() => countMistakes = true, 1000);
+			}
 		}
 	}
 };
