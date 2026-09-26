@@ -179,13 +179,13 @@ body {
 
 .collected-number {
 	background-color: #D6CBC266;
-	font-size: min(5cqw, 5cqh);
-	line-height: min(4vw, 4vh);
+	font-size: min(4cqw, 4cqh);
+	line-height: min(3vw, 3vh);
 	border-radius: min(1vw, 1vh);
 	padding: min(0.2vw, 0.2vh);
 	position: absolute;
-	right: min(0.5vw, 0.5vh);
-	bottom: min(0.5vw, 0.5vh);
+	right: min(0.6vw, 0.6vh);
+	bottom: min(0.6vw, 0.6vh);
 	user-select: none;
 }
 

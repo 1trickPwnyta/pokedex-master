@@ -64,12 +64,12 @@
 			"sprite_suffix": ".png"
 		},
 		{
-			"range": [ 650, 809 ],
+			"range": [ 650, 807 ],
 			"sprite_prefix": "https://img.pokemondb.net/sprites/bank/normal/",
 			"sprite_suffix": ".png"
 		},
 		{
-			"range": [ 810, 1025 ],
+			"range": [ 808, 1025 ],
 			"sprite_prefix": "https://img.pokemondb.net/sprites/home/normal/",
 			"sprite_suffix": ".png"
 		}
