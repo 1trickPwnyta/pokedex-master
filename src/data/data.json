@@ -2,26 +2,75 @@
 	"generations": [
 		{
 			"name": "Generation 1",
+			"range": [ 1, 151 ]
+		},
+		{
+			"name": "Generation 2",
+			"range": [ 152, 251 ]
+		},
+		{
+			"name": "Generation 3",
+			"range": [ 252, 386 ]
+		},
+		{
+			"name": "Generation 4",
+			"range": [ 387, 493 ]
+		},
+		{
+			"name": "Generation 5",
+			"range": [ 494, 649 ]
+		},
+		{
+			"name": "Generation 6",
+			"range": [ 650, 721 ]
+		},
+		{
+			"name": "Generation 7",
+			"range": [ 722, 809 ]
+		},
+		{
+			"name": "Generation 8",
+			"range": [ 810, 905 ]
+		},
+		{
+			"name": "Generation 9",
+			"range": [ 906, 1025 ]
+		}
+	],
+	"sprite_sources": [
+		{
 			"range": [ 1, 151 ],
 			"sprite_prefix": "https://img.pokemondb.net/sprites/black-white/normal/",
 			"sprite_suffix": ".png"
 		},
 		{
-			"name": "Generation 2",
 			"range": [ 152, 251 ],
 			"sprite_prefix": "https://img.pokemondb.net/sprites/black-white/normal/",
 			"sprite_suffix": ".png"
 		},
 		{
-			"name": "Generation 3",
 			"range": [ 252, 386 ],
 			"sprite_prefix": "https://img.pokemondb.net/sprites/black-white/normal/",
 			"sprite_suffix": ".png"
 		},
 		{
-			"name": "Generation 4",
 			"range": [ 387, 493 ],
 			"sprite_prefix": "https://img.pokemondb.net/sprites/black-white/normal/",
+			"sprite_suffix": ".png"
+		},
+		{
+			"range": [ 494, 649 ],
+			"sprite_prefix": "https://img.pokemondb.net/sprites/black-white/normal/",
+			"sprite_suffix": ".png"
+		},
+		{
+			"range": [ 650, 809 ],
+			"sprite_prefix": "https://img.pokemondb.net/sprites/bank/normal/",
+			"sprite_suffix": ".png"
+		},
+		{
+			"range": [ 810, 1025 ],
+			"sprite_prefix": "https://img.pokemondb.net/sprites/home/normal/",
 			"sprite_suffix": ".png"
 		}
 	]

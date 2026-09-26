@@ -112,16 +112,18 @@ body {
 	background-color: #D6CBC2;
 	height: 100%;
 	flex-direction: column;
-	gap: 5vh;
+	gap: 1vh;
+	padding-top: 5vh;
+	padding-bottom: 5vh;
+	overflow: hidden;
 }
 
 .question-number {
-	font-size: 15cqh;
+	font-size: min(25cqh, 35cqw);
 }
 
 #question-image img {
-	min-height: 25vh;
-	max-height: 25vh;
+	height: min(35vh, 60vw);
 }
 
 #right {
@@ -169,14 +171,14 @@ body {
 	position: relative;
 	transition: opacity 0.25s ease-in;
 	animation: bubble-in 0.25s ease-out forwards;
-	background-size: 120%;
+	background-size: 100%;
 	background-position: center;
 	background-repeat: no-repeat;
 	padding: 0;
 }
 
 .collected-number {
-	background-color: #D6CBC288;
+	background-color: #D6CBC266;
 	font-size: min(5cqw, 5cqh);
 	line-height: min(4vw, 4vh);
 	border-radius: min(1vw, 1vh);

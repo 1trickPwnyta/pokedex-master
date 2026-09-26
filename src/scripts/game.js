@@ -66,9 +66,11 @@ export class Game {
 					outerClass: "swirl-y"
 				});
 			} else {
+				const spriteInfo = Graphics.getSpriteUrl(Game.board[Game.level], Game.getCurrentPokemon());
 				Layout.setQuestion({
 					text: `${Game.board[Game.level]} is ${Game.getCurrentPokemon().name}!`,
-					image: Graphics.getSpriteUrl(Game.board[Game.level], Game.getCurrentPokemon()),
+					image: spriteInfo.url,
+					image_yoffset: spriteInfo.yoffset,
 					innerClass: "swirl-x",
 					outerClass: "swirl-y"
 				});
@@ -86,7 +88,7 @@ export class Game {
 		if (!Settings.isOrderedMode()) {
 			Game.board = arrayShuffle(Game.board);
 		}
-		const url = Graphics.getSpriteUrl(Game.board[0], Pokemon.getPokemon(Game.board[0]));
+		const url = Graphics.getSpriteUrl(Game.board[0], Pokemon.getPokemon(Game.board[0])).url;
 		Graphics.cacheImage(url);
 		Graphics.cacheBackground(url);
 	}
@@ -101,20 +103,21 @@ export class Game {
 		
 		if (Game.level < Game.board.length) {
 			const currentPokemon = Game.getCurrentPokemon();
-			const url = Graphics.getSpriteUrl(Game.board[Game.level], currentPokemon);
+			const spriteInfo = Graphics.getSpriteUrl(Game.board[Game.level], currentPokemon);
 			if (Settings.isReverse()) {
 				Layout.setQuestion({
 					number: Game.board[Game.level]
 				});
-				Graphics.cacheImage(url);
-				Graphics.cacheBackground(url);
+				Graphics.cacheImage(spriteInfo.url);
+				Graphics.cacheBackground(spriteInfo.url);
 			} else {
 				Layout.setQuestion({
 					text: currentPokemon.name,
-					image: url
+					image: spriteInfo.url,
+					image_yoffset: spriteInfo.yoffset
 				});
 				if (Game.level < Game.board.length - 1) {
-					const nextUrl = Graphics.getSpriteUrl(Game.board[Game.level + 1], Pokemon.getPokemon(Game.board[Game.level + 1]));
+					const nextUrl = Graphics.getSpriteUrl(Game.board[Game.level + 1], Pokemon.getPokemon(Game.board[Game.level + 1])).url;
 					Graphics.cacheImage(nextUrl);
 					Graphics.cacheBackground(nextUrl);
 				}

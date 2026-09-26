@@ -80,7 +80,7 @@ export class Layout {
 		if (options.image) {
 			Layout.questionImage.style.display = "initial";
 			Layout.questionImage.className = options.outerClass ?? "";
-			Layout.questionImage.innerHTML = `<img src="${options.image}" class="${options.innerClass ?? ""}" />`;
+			Layout.questionImage.innerHTML = `<img src="${options.image}" class="${options.innerClass ?? ""}" style="transform: translateY(${options.image_yoffset});" />`;
 		}
 	}
 
@@ -160,7 +160,9 @@ export class Layout {
 		const collected = document.createElement("div");
 		collected.className = "collected card";
 		collected.style.opacity = "0";
-		collected.style.backgroundImage = `url('${Graphics.getSpriteUrl(Game.board[Game.level], Game.getCurrentPokemon())}')`;
+		const spriteInfo = Graphics.getSpriteUrl(Game.board[Game.level], Game.getCurrentPokemon());
+		collected.style.backgroundImage = `url('${spriteInfo.url}')`;
+		collected.style.backgroundPositionY = spriteInfo.yoffset;
 		collected.innerHTML = `<div class="collected-number"><span class="small-symbol">#</span>${Game.board[Game.level]}</div>`;
 		Layout.collection.prepend(collected);
 		Layout.collection.scrollTop = 0;

@@ -22,12 +22,13 @@
 
 .message-area {
 	width: 100%;
-	height: 70%;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	font-size: 0.6em;
+	margin-bottom: 1vh;
 }
 
 .message-title {

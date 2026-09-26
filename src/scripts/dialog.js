@@ -83,23 +83,32 @@ export class Dialog {
 		Dialog.doDialog({ title: message, buttons: [ yesButton, noButton ], onCancel: onCancel });
 	}
 
-	static choices(title, choices, onSubmit, onCancel, minSelections, requireRestart) {
+	static choices(title, choices, onSubmit, options) {
 		const checkboxes = [];
-		
 		const element = document.createElement("div");
+		
+		if (options.showSelectAll) {
+			const buttonArea = document.createElement("div");
+			buttonArea.className = "button-area";
+			buttonArea.style.marginBottom = "1vh";
+			buttonArea.appendChild(UI.makeButtonText("Select all", () => {
+				for (const checkbox of checkboxes) {
+					checkbox.checked = true;
+				}
+			}).element);
+			buttonArea.appendChild(UI.makeButtonText("Unselect all", () => {
+				for (const checkbox of checkboxes) {
+					checkbox.checked = false;
+				}
+			}).element);
+			element.appendChild(buttonArea);
+		}
+		
 		for (const choice of choices) {
 			const choiceElement = document.createElement("div");
 			choiceElement.className = "dialog-checkboxes";
 			
-			const [ choiceCheckbox, choiceLabel ] = UI.makeCheckbox(
-				choice.value,
-				choice.selected,
-				null,
-				checkbox =>
-					!minSelections
-					|| checkbox.checked
-					|| checkboxes.filter(c => c.checked).length >= minSelections
-			);
+			const [ choiceCheckbox, choiceLabel ] = UI.makeCheckbox(choice.value, choice.selected);
 			choiceElement.appendChild(choiceCheckbox);
 			checkboxes.push(choiceCheckbox);
 			choiceElement.appendChild(choiceLabel);
@@ -109,21 +118,21 @@ export class Dialog {
 		
 		const submitButton = UI.makeButtonText("Save", () => {
 			const callback = () => onSubmit(checkboxes.filter(c => c.checked).map(c => c.value));
-			if (requireRestart
+			if (options.requireRestart
 					&& choices.map(c => c.selected ? 1 : 0).join("") != checkboxes
 						.map(c => c.checked ? 1 : 0).join("")) {
 				Dialog.promptRestart(() => Dialog.closeMessage(callback));
 			} else {
 				Dialog.closeMessage(callback);
 			}
-		});
-		const cancelButton = UI.makeButtonText("Cancel", () => Dialog.closeMessage(onCancel));
+		}, true, () => options.minSelections && checkboxes.filter(c => c.checked).length < options.minSelections);
+		const cancelButton = UI.makeButtonText("Cancel", () => Dialog.closeMessage(options.onCancel));
 		
 		Dialog.doDialog({
 			title: title,
 			element: element,
 			buttons: [ submitButton, cancelButton ],
-			onCancel: onCancel
+			onCancel: options.onCancel
 		});
 	}
 
@@ -158,7 +167,11 @@ export class Dialog {
 				return { value: g.name, selected: selected.includes(g.name) };
 			}), selections => {
 				Settings.setGenerations(selections);
-			}, null, 1, true);
+			}, {
+				minSelections: 1,
+				requireRestart: true,
+				showSelectAll: true
+			});
 		});
 		element.appendChild(generationsButton.element);
 		

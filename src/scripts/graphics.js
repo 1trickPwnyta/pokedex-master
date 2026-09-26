@@ -64,12 +64,15 @@ export class Graphics {
 	}
 
 	static getSpriteUrl(number, pokemon) {
-		for (const generation of data.generations) {
-			if (generation.range[0] <= number && generation.range[1] >= number) {
-				return `${generation.sprite_prefix}${pokemon.imageId ?? pokemon.name.toLowerCase()}${generation.sprite_suffix}`;
+		for (const sprite_source of data.sprite_sources) {
+			if (sprite_source.range[0] <= number && sprite_source.range[1] >= number) {
+				return {
+					url: `${sprite_source.sprite_prefix}${pokemon.imageId ?? pokemon.name.toLowerCase()}${sprite_source.sprite_suffix}`,
+					yoffset: sprite_source.sprite_yoffset
+				};
 			}
 		}
-		return Graphics.noImage;
+		return { url: Graphics.noImage };
 	}
 	
 	static jitter(element) {

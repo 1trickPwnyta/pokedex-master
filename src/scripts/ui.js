@@ -18,13 +18,23 @@ export class Button {
 			this.element.appendChild(this.element.icon);
 		}
 		this.element.onclick = () => {
-			if (!options.silent) {
-				Sound.click.play();
-			}
-			if (options.action) {
-				options.action();
+			if (!options.isDisabled || !options.isDisabled()) {
+				if (!options.silent) {
+					Sound.click.play();
+				}
+				if (options.action) {
+					options.action();
+				}
 			}
 		};
+		if (options.isDisabled) {
+			this.element.onmousedown = () => {
+				if (options.isDisabled()) {
+					Graphics.jitter(this.element);
+					Sound.reject.play();
+				}
+			};
+		}
 	}
 	
 	setImage(url) {
@@ -37,19 +47,21 @@ export class Button {
 }
 
 export class UI {
-	static makeButtonText(text, action, playClickSound = true) {
+	static makeButtonText(text, action, playClickSound = true, isDisabled = null) {
 		return new Button({
 			text: text,
 			action: action,
-			silent: !playClickSound
+			silent: !playClickSound,
+			isDisabled: isDisabled
 		});
 	}
 	
-	static makeButtonImage(image, action, playClickSound = true) {
+	static makeButtonImage(image, action, playClickSound = true, isDisabled = null) {
 		return new Button({
 			image: image,
 			action: action,
-			silent: !playClickSound
+			silent: !playClickSound,
+			isDisabled: isDisabled
 		});
 	}
 	

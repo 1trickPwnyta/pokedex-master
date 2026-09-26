@@ -10,6 +10,6 @@ export class Pokemon {
 	}
 	
 	static simplifyName(name) {
-		return name.toLowerCase().replaceAll(/[^a-z0-9]/g, "").replace(/^0+/, "");
+		return name.toLowerCase().replaceAll(/[^a-z0-9]/g, "").replace(/^0+/, "").replaceAll("é", "e");
 	}
 };
