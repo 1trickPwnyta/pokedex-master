@@ -1,7 +1,7 @@
 import themes from "../data/themes.json";
 
 export class Theme {
-	static default = themes.default;
+	static default = themes.default_theme;
 	
 	static getAll() {
 		return Object.keys(themes.themes).sort();

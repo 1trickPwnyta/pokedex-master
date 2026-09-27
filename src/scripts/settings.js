@@ -62,7 +62,7 @@ export class Settings {
 	}
 	
 	static getTheme() {
-		return Settings.getAppearance().theme ?? Theme.default_theme;
+		return Settings.getAppearance().theme ?? Theme.default;
 	}
 	
 	static setTheme(theme) {
