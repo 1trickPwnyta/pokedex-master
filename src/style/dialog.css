@@ -11,11 +11,11 @@
 }
 
 .message-box {
-	background: #D6CBC2;
+	border-width: 2vh;
+	border-style: solid;
 	min-width: 45vw;
 	max-width: 65vw;
 	min-height: 35vh;
-	border: 2vh solid #3A3622;
 	flex-direction: column;
 	position: relative;
 }
@@ -27,18 +27,18 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	font-size: 0.6em;
+	font-size: 0.6rem;
 	margin-bottom: 1vh;
 }
 
 .message-title {
-	font-size: 1.4em;
+	font-size: 0.9rem;
 	text-align: left;
 	width: 100%;
 }
 
 .message-subtitle {
-	font-size: 0.8em;
+	font-size: 0.5rem;
 	text-align: left;
 	width: 100%;
 }
@@ -74,8 +74,9 @@ input[type="checkbox"] {
 	appearance: none;
 	height: 2lh;
 	aspect-ratio: 1;
-	border: 0.5vh #3A3622 solid;
-	border-radius: 1vh;
+	border-radius: var(--border-radius);
+	border-width: 0.5vh;
+	border-style: solid;
 }
 
 input[type="checkbox"]:checked {
@@ -83,7 +84,6 @@ input[type="checkbox"]:checked {
 	mask-size: contain;
 	mask-repeat: no-repeat;
 	mask-position: center;
-	background-color: #3A3622;
 }
 
 input::-webkit-outer-spin-button,
@@ -99,13 +99,17 @@ input[type=number] {
 select {
 	appearance: none;
 	font: inherit;
-	font-size: 4cqh;
+	text-transform: inherit;
+	font-size: 0.75rem;
 	color: inherit;
 	background-color: inherit;
-	border: 0.75vh #3A3622 solid;
-	border-radius: 1vh;
+	border-radius: var(--border-radius);
+	border-width: 0.75vh;
+	border-style: solid;
 	padding-left: 0.5vh;
 	padding-right: 5vh;
+	min-height: 6vh;
+	max-width: 100%;
 }
 
 .select-container {
@@ -115,6 +119,7 @@ select {
 .select-wrapper {
 	display: inline-block;
 	position: relative;
+	max-width: 100%;
 }
 
 .select-wrapper::after {
@@ -123,16 +128,11 @@ select {
 	mask-size: contain;
 	mask-repeat: no-repeat;
 	mask-position: center;
-	background-color: #3A3622;
 	position: absolute;
 	right: 0;
 	top: 0;
 	padding: 3vh;
 	pointer-events: none;
-}
-
-option {
-	background-color: #D6CBC2;
 }
 
 .select-label {
@@ -146,6 +146,10 @@ option {
 	flex-direction: row;
 	flex-wrap: wrap;
 	gap: 1vh;
+}
+
+.settings-main .option {
+	font-size: 110%;
 }
 
 .settings-bottom {

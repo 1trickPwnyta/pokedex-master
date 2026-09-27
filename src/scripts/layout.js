@@ -30,7 +30,7 @@ export class Layout {
 	static settings = document.getElementById("settings");
 	
 	static init() {
-		Layout.addOption(Game.optionStart);
+		Layout.reset();
 		Layout.addSetting(Game.optionHelp);
 		Layout.addSetting(Game.optionSettings);
 		Layout.main.style.visibility = "visible";
@@ -60,7 +60,8 @@ export class Layout {
 		Layout.addOption(Game.optionStart);
 		Layout.setQuestion({
 			text: "Welcome to<br />Pokédex Master",
-			image: Graphics.icon
+			image: Graphics.icon,
+			imageMask: true
 		});
 		Layout.clearCollection();
 		Layout.timer.innerHTML = "";
@@ -80,7 +81,18 @@ export class Layout {
 		if (options.image) {
 			Layout.questionImage.style.display = "initial";
 			Layout.questionImage.className = options.outerClass ?? "";
-			Layout.questionImage.innerHTML = `<img src="${options.image}" class="${options.innerClass ?? ""}" style="transform: translateY(${options.image_yoffset});" />`;
+			Layout.questionImage.innerHTML = "";
+			document.documentElement.style.setProperty("--question-image-mask", `url(${options.image})`);
+			Layout.questionImage.className = "question-image-mask";
+		}
+		if (options.sprite) {
+			Layout.questionImage.style.display = "initial";
+			Layout.questionImage.className = options.outerClass ?? "";
+			const sprite = document.createElement("img");
+			sprite.className = options.innerClass;
+			sprite.src = options.sprite.url;
+			sprite.style.transform = `translateY(${options.sprite.yoffset})`;
+			Layout.questionImage.appendChild(sprite);
 		}
 	}
 
@@ -161,9 +173,11 @@ export class Layout {
 		collected.className = "collected card";
 		collected.style.opacity = "0";
 		const spriteInfo = Graphics.getSpriteUrl(Game.board[Game.level], Game.getCurrentPokemon());
-		collected.style.backgroundImage = `url('${spriteInfo.url}')`;
-		collected.style.backgroundPositionY = spriteInfo.yoffset;
+		const collectedImage = document.createElement("img");
+		collectedImage.className = "collected-image";
+		collectedImage.src = spriteInfo.url;
 		collected.innerHTML = `<div class="collected-number"><span class="small-symbol">#</span>${Game.board[Game.level]}</div>`;
+		collected.appendChild(collectedImage);
 		Layout.collection.prepend(collected);
 		Layout.collection.scrollTop = 0;
 		Graphics.flushStyle(collected);

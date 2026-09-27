@@ -2,6 +2,7 @@ import { Game } from "./game";
 import { Graphics } from "./graphics";
 import { Sound } from "./sound";
 import { UI } from "./ui";
+import { Theme } from "./theme";
 import { Settings } from "./settings";
 import data from "../data/data.json";
 
@@ -91,12 +92,12 @@ export class Dialog {
 			const buttonArea = document.createElement("div");
 			buttonArea.className = "button-area";
 			buttonArea.style.marginBottom = "1vh";
-			buttonArea.appendChild(UI.makeButtonText("Select all", () => {
+			buttonArea.appendChild(UI.makeButtonText("All", () => {
 				for (const checkbox of checkboxes) {
 					checkbox.checked = true;
 				}
 			}).element);
-			buttonArea.appendChild(UI.makeButtonText("Unselect all", () => {
+			buttonArea.appendChild(UI.makeButtonText("Nothing", () => {
 				for (const checkbox of checkboxes) {
 					checkbox.checked = false;
 				}
@@ -205,6 +206,35 @@ export class Dialog {
 			});
 		});
 		element.appendChild(gameplayButton.element);
+		
+		const appearanceButton = UI.makeButtonText("Appearance", () => {
+			const appearance = Settings.getAppearance();
+			const originalAppearance = Settings.getAppearance();
+			
+			const appearanceElement = document.createElement("div");
+			const themeDropdown = UI.makeDropdown("Theme", Theme.getAll(), appearance.theme ?? Theme.default_theme, theme => {
+				Theme.apply(theme);
+			});
+			appearanceElement.appendChild(themeDropdown.element);
+			
+			const submitButton = UI.makeButtonText("Save", () => {
+				Settings.setTheme(themeDropdown.value);
+				Dialog.closeMessage();
+			});
+			const onCancel = () => {
+				Theme.apply(originalAppearance.theme ?? Theme.default_theme);
+				Dialog.closeMessage();
+			};
+			const cancelButton = UI.makeButtonText("Cancel", onCancel);
+			
+			Dialog.doDialog({
+				title: "Appearance",
+				element: appearanceElement,
+				buttons: [ submitButton, cancelButton ],
+				onCancel: onCancel
+			});
+		});
+		element.appendChild(appearanceButton.element);
 		
 		const bottom = document.createElement("div");
 		bottom.className = "settings-bottom";

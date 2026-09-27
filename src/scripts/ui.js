@@ -100,7 +100,7 @@ export class UI {
 		return [ checkbox, label ];
 	}
 	
-	static makeDropdown(title, options, selected, callback) {
+	static makeDropdown(title, options, selected, onChange) {
 		const wrapper = document.createElement("div");
 		wrapper.className = "select-container";
 		
@@ -123,8 +123,8 @@ export class UI {
 		dropdown.onclick = () => Sound.click.play();
 		dropdown.onchange = () => {
 			Sound.click.play();
-			if (callback) {
-				callback(dropdown);
+			if (onChange) {
+				onChange(dropdown.value);
 			}
 		};
 		selectWrapper.appendChild(dropdown);

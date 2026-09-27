@@ -69,7 +69,7 @@ export class Game {
 				const spriteInfo = Graphics.getSpriteUrl(Game.board[Game.level], Game.getCurrentPokemon());
 				Layout.setQuestion({
 					text: `${Game.board[Game.level]} is ${Game.getCurrentPokemon().name}!`,
-					image: spriteInfo.url,
+					sprite: spriteInfo,
 					image_yoffset: spriteInfo.yoffset,
 					innerClass: "swirl-x",
 					outerClass: "swirl-y"
@@ -113,8 +113,7 @@ export class Game {
 			} else {
 				Layout.setQuestion({
 					text: currentPokemon.name,
-					image: spriteInfo.url,
-					image_yoffset: spriteInfo.yoffset
+					sprite: spriteInfo
 				});
 				if (Game.level < Game.board.length - 1) {
 					const nextUrl = Graphics.getSpriteUrl(Game.board[Game.level + 1], Pokemon.getPokemon(Game.board[Game.level + 1])).url;

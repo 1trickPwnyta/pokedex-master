@@ -1,9 +1,11 @@
+import { Theme } from "./theme";
 import data from "../data/data.json";
 
 const PREFIX = "pokedex_master_";
 const MUTE_AUDIO = `${PREFIX}muteAudio`;
 const GENERATIONS = `${PREFIX}generations`;
 const GAMEPLAY = `${PREFIX}gameplay`;
+const APPEARANCE = `${PREFIX}appearance`;
 
 export class Settings {
 	static normalMode = "Normal";
@@ -49,5 +51,23 @@ export class Settings {
 	
 	static isOrderedMode() {
 		return Settings.getGameplay().mode == Settings.orderedMode;
+	}
+	
+	static getAppearance() {
+		return JSON.parse(localStorage[APPEARANCE] ?? "{}");
+	}
+	
+	static setAppearance(appearance) {
+		localStorage[APPEARANCE] = JSON.stringify(appearance);
+	}
+	
+	static getTheme() {
+		return Settings.getAppearance().theme ?? Theme.default_theme;
+	}
+	
+	static setTheme(theme) {
+		const appearance = Settings.getAppearance();
+		appearance.theme = theme;
+		localStorage[APPEARANCE] = JSON.stringify(appearance);
 	}
 };

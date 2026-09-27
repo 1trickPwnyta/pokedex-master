@@ -68,7 +68,8 @@ export class Graphics {
 			if (sprite_source.range[0] <= number && sprite_source.range[1] >= number) {
 				return {
 					url: `${sprite_source.sprite_prefix}${pokemon.imageId ?? pokemon.name.toLowerCase()}${sprite_source.sprite_suffix}`,
-					yoffset: sprite_source.sprite_yoffset
+					yoffset: sprite_source.sprite_yoffset,
+					scale: sprite_source.scale
 				};
 			}
 		}

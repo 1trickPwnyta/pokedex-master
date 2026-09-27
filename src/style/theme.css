@@ -1,0 +1,130 @@
+html {
+	font-size: var(--font-size);
+	text-transform: var(--text-transform);
+}
+
+body {
+	background-color: var(--color-dark);
+	font-family: var(--font-family);
+}
+
+#loading {
+	background-color: var(--color-dark);
+}
+
+#loading .graphic {
+	background-color: var(--color-highlight);
+}
+
+.light {
+	color: var(--color-dark);
+}
+
+.dark {
+	color: var(--color-light);
+}
+
+.good {
+	color: var(--color-highlight);
+	text-shadow: 0 0 4px var(--color-dark);
+}
+
+.bad {
+	color: #E53935;
+	text-shadow: 0 0 4px (--color-dark);
+}
+
+#timer {
+	background-color: var(--color-medium);
+}
+
+#question {
+	background-color: var(--color-light);
+}
+
+.question-image-mask {
+	background-color: var(--color-dark);
+	image-rendering: var(--rendering-image);
+}
+
+#question-image img {
+	image-rendering: var(--rendering-image);
+	filter: var(--filter-image);
+}
+
+#progress {
+	background-color: var(--color-medium);
+}
+
+#collection {
+	background-color: var(--color-light);
+}
+
+.collected {
+	background-color: var(--color-dark);
+}
+
+.collected-image {
+	image-rendering: var(--rendering-image);
+	filter: var(--filter-image);
+	z-index: -1;
+}
+
+.collected-number {
+	background-color: rgba(from var(--color-light) r g b / 0.375);
+}
+
+#answer {
+	background-color: var(--color-highlight);
+}
+
+#answer-field {
+	color: var(--color-dark);
+	background-color: var(--color-light);
+}
+
+#options {
+	background-color: var(--color-medium);
+}
+
+.option {
+	background-color: var(--color-light);
+	color: var(--color-dark);
+	border-color: var(--color-dark);
+}
+
+.option div {
+	background-color: var(--color-dark);
+	image-rendering: var(--rendering-image);
+}
+
+#settings {
+	background-color: var(--color-medium);
+}
+
+.message-box {
+	background-color: var(--color-light);
+	border-color: var(--color-dark);
+}
+
+input[type="checkbox"] {
+	border-color: var(--color-dark);
+	image-rendering: var(--rendering-image);
+}
+
+input[type="checkbox"]:checked {
+	background-color: var(--color-dark);
+}
+
+select {
+	border-color: var(--color-dark);
+}
+
+.select-wrapper::after {
+	image-rendering: var(--rendering-image);
+	background-color: var(--color-dark);
+}
+
+option {
+	background-color: var(--color-light);
+}

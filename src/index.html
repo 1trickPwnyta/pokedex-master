@@ -13,10 +13,42 @@
 		<link rel="stylesheet" href="./style/main.css" />
 		<link rel="stylesheet" href="./style/dialog.css" />
 		<link rel="stylesheet" href="./style/animations.css" />
+		<link rel="stylesheet" href="./style/theme.css" />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
 		<script type="module" src="./scripts/main.js"></script>
+		<svg xmlns="http://www.w3.org/2000/svg" style="position: absolute; width: 0; height: 0; overflow: hidden;">
+			<defs>
+				<filter id="retro-palette" color-interpolation-filters="sRGB">
+					<feComponentTransfer in="SourceGraphic" result="BoostedContrast">
+						<feFuncR type="linear" slope="2.4" intercept="-0.7" />
+						<feFuncG type="linear" slope="2.4" intercept="-0.7" />
+						<feFuncB type="linear" slope="2.4" intercept="-0.7" />
+					</feComponentTransfer>
+					<feColorMatrix type="matrix" in="BoostedContrast" result="Grayscale"
+						values="0.2126 0.7152 0.0722 0 0
+								0.2126 0.7152 0.0722 0 0
+								0.2126 0.7152 0.0722 0 0
+								0      0      0      1 0" />
+					<feComponentTransfer in="Grayscale" result="RetroGraphic">
+						<feFuncR type="discrete" tableValues="0.1216 0.1961 0.2588 0.4000 0.5373 0.6314" />
+						<feFuncG type="discrete" tableValues="0.1804 0.2431 0.2980 0.4667 0.6078 0.6980" />
+						<feFuncB type="discrete" tableValues="0.1216 0.1647 0.2039 0.3255 0.4157 0.5098" />
+					</feComponentTransfer>
+					<feMorphology in="BoostedContrast" operator="dilate" radius="1" result="ScaledAlpha" />
+					<feColorMatrix in="ScaledAlpha" type="matrix" result="Outline"
+						values="0 0 0 0 0.1216
+								0 0 0 0 0.1804
+								0 0 0 0 0.1216
+								0 0 0 1 0" />
+					<feMerge>
+						<feMergeNode in="Outline" />
+						<feMergeNode in="RetroGraphic" />
+					</feMerge>
+				</filter>
+			</defs>
+		</svg>
 	</head>
 	<body>
 		<div id="loading"><div class="graphic"></div></div>

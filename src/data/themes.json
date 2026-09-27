@@ -1,0 +1,96 @@
+{
+	"default_theme": "Ancient Techno",
+	"default_font": {
+		"family": "Passion One",
+		"size": "4cqh"
+	},
+	"themes": {
+		"Ancient Techno": {
+			"color": {
+				"dark": "#3A3622",
+				"medium": "#6A4606",
+				"light": "#D6CBC2",
+				"highlight": "#2CC3BE"
+			}
+		},
+		"Serpentine": {
+			"color": {
+				"dark": "#122118",
+				"medium": "#315940",
+				"light": "#D4B9B9",
+				"highlight": "#48C7B3"
+			}
+		},
+		"Blueprint": {
+			"color": {
+				"dark": "#1B1B46",
+				"medium": "#607EC3",
+				"light": "#DBDFD7",
+				"highlight": "#F38E5E"
+			}
+		},
+		"Midnight Orchid": {
+			"color": {
+				"dark": "#241429",
+				"medium": "#A973BA",
+				"light": "#F7C5F0",
+				"highlight": "#2B8C39"
+			}
+		},
+		"Nordic Fog": {
+			"color": {
+				"dark": "#161D1D",
+				"medium": "#526C6E",
+				"light": "#C2BDAE",
+				"highlight": "#78B9ED"
+			}
+		},
+		"Kiln Fired": {
+			"color": {
+				"dark": "#0F110C",
+				"medium": "#AC3931",
+				"light": "#F3D9DC",
+				"highlight": "#FF9F1C"
+			}
+		},
+		"Plum Cotton": {
+			"color": {
+				"dark": "#443850",
+				"medium": "#8E5572",
+				"light": "#F2F7F2",
+				"highlight": "#BBBE64"
+			}
+		},
+		"Desert Twilight": {
+			"color": {
+				"dark": "#011638",
+				"medium": "#685044",
+				"light": "#F9DEC9",
+				"highlight": "#99B2DD"
+			}
+		},
+		"High Contrast": {
+			"color": {
+				"dark": "#000000",
+				"medium": "#2D7DD2",
+				"light": "#FFECD1",
+				"highlight": "#F45D01"
+			}
+		},
+		"Retro": {
+			"color": {
+				"dark": "#1F2E1F",
+				"medium": "#424C34",
+				"light": "#A1B282",
+				"highlight": "#899B6A"
+			},
+			"font": {
+				"family": "Press Start 2P",
+				"transform": "uppercase"
+			},
+			"filter": "url(\"#retro-palette\")",
+			"rendering": "crisp-edges",
+			"border_radius": false
+		}
+	}
+}
