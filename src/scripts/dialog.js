@@ -212,7 +212,7 @@ export class Dialog {
 			const originalAppearance = Settings.getAppearance();
 			
 			const appearanceElement = document.createElement("div");
-			const themeDropdown = UI.makeDropdown("Theme", Theme.getAll(), appearance.theme ?? Theme.default_theme, theme => {
+			const themeDropdown = UI.makeDropdown("Theme", Theme.getAll(), appearance.theme ?? Theme.default, theme => {
 				Theme.apply(theme);
 			});
 			appearanceElement.appendChild(themeDropdown.element);
