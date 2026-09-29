@@ -13,12 +13,10 @@ export class Theme {
 		document.documentElement.style.setProperty("--color-medium", theme.color.medium);
 		document.documentElement.style.setProperty("--color-light", theme.color.light);
 		document.documentElement.style.setProperty("--color-highlight", theme.color.highlight);
-		document.documentElement.style.setProperty("--font-family", `"${theme.font?.family ?? themes.default_font.family}"`);
-		document.documentElement.style.setProperty("--font-size", theme.font?.size ?? themes.default_font.size);
-		document.documentElement.style.setProperty("--text-transform", theme.font?.transform ?? "initial");
-		document.documentElement.style.setProperty("--filter-image", theme.filter ?? "initial");
-		document.documentElement.style.setProperty("--rendering-image", theme.rendering ?? "initial");
-		document.documentElement.style.setProperty("--border-radius", theme.border_radius !== false ? "1vh" : "none");
-		document.documentElement.style.setProperty("--size-close-button-mask", theme.border_radius !== false ? "102%" : "110%");
+		if (theme.css) {
+			document.getElementById("theme-css").href = `./style/themes/${theme.css}`;
+		} else {
+			document.getElementById("theme-css").href = "";
+		}
 	}
 };

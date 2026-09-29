@@ -84,13 +84,7 @@
 				"light": "#A1B282",
 				"highlight": "#899B6A"
 			},
-			"font": {
-				"family": "Press Start 2P",
-				"transform": "uppercase"
-			},
-			"filter": "url(\"#retro-palette\")",
-			"rendering": "crisp-edges",
-			"border_radius": false
+			"css": "retro.css"
 		}
 	}
 }

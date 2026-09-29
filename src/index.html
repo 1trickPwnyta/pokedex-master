@@ -14,6 +14,7 @@
 		<link rel="stylesheet" href="./style/dialog.css" />
 		<link rel="stylesheet" href="./style/animations.css" />
 		<link rel="stylesheet" href="./style/theme.css" />
+		<link rel="stylesheet" id="theme-css" href="" />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -38,9 +39,9 @@
 					</feComponentTransfer>
 					<feMorphology in="BoostedContrast" operator="dilate" radius="1" result="ScaledAlpha" />
 					<feColorMatrix in="ScaledAlpha" type="matrix" result="Outline"
-						values="0 0 0 0 0.1216
-								0 0 0 0 0.1804
-								0 0 0 0 0.1216
+						values="0 0 0 0 0.2588
+								0 0 0 0 0.2980
+								0 0 0 0 0.2039
 								0 0 0 1 0" />
 					<feMerge>
 						<feMergeNode in="Outline" />

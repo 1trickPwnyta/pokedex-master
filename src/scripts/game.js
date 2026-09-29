@@ -68,7 +68,7 @@ export class Game {
 			} else {
 				const spriteInfo = Graphics.getSpriteUrl(Game.board[Game.level], Game.getCurrentPokemon());
 				Layout.setQuestion({
-					text: `${Game.board[Game.level]} is ${Game.getCurrentPokemon().name}!`,
+					text: `#${Game.board[Game.level]} is ${Game.getCurrentPokemon().name}!`,
 					sprite: spriteInfo,
 					image_yoffset: spriteInfo.yoffset,
 					innerClass: "swirl-x",

@@ -27,18 +27,18 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	font-size: 0.6rem;
+	font-size: 0.6em;
 	margin-bottom: 1vh;
 }
 
 .message-title {
-	font-size: 0.9rem;
+	font-size: 1.4em;
 	text-align: left;
 	width: 100%;
 }
 
 .message-subtitle {
-	font-size: 0.5rem;
+	font-size: 0.8em;
 	text-align: left;
 	width: 100%;
 }
@@ -74,7 +74,7 @@ input[type="checkbox"] {
 	appearance: none;
 	height: 2lh;
 	aspect-ratio: 1;
-	border-radius: var(--border-radius);
+	border-radius: 1vh;
 	border-width: 0.5vh;
 	border-style: solid;
 }
@@ -100,10 +100,10 @@ select {
 	appearance: none;
 	font: inherit;
 	text-transform: inherit;
-	font-size: 0.75rem;
+	font-size: 4cqh;
 	color: inherit;
 	background-color: inherit;
-	border-radius: var(--border-radius);
+	border-radius: 1vh;
 	border-width: 0.75vh;
 	border-style: solid;
 	padding-left: 0.5vh;
@@ -146,10 +146,6 @@ select {
 	flex-direction: row;
 	flex-wrap: wrap;
 	gap: 1vh;
-}
-
-.settings-main .option {
-	font-size: 110%;
 }
 
 .settings-bottom {

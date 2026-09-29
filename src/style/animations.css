@@ -41,8 +41,13 @@
 }
 
 @keyframes grow {
-	0% { transform: scale(1); }
-	100% { transform: scale(2); }
+	0% { scale: 1; }
+	100% { scale: 2; }
+}
+
+@keyframes float {
+	0% { translate: 0 0; }
+	100% { translate: 0 -5vh; }
 }
 
 .swirl-x {
@@ -66,4 +71,12 @@
 
 .mistake {
 	animation: fade-out 0.25s forwards ease-out, grow 0.25s forwards ease-out, jitter 0.1s infinite;
+}
+
+.blink-in, #answer-field.blink-in {
+	box-shadow: 0 0 25px 1.5vh white;
+}
+
+.blink-out, #answer-field.blink-out {
+	transition: box-shadow 0.5s ease;
 }

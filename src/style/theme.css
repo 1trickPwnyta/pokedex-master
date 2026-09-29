@@ -1,11 +1,5 @@
-html {
-	font-size: var(--font-size);
-	text-transform: var(--text-transform);
-}
-
 body {
 	background-color: var(--color-dark);
-	font-family: var(--font-family);
 }
 
 #loading {
@@ -31,7 +25,7 @@ body {
 
 .bad {
 	color: #E53935;
-	text-shadow: 0 0 4px (--color-dark);
+	text-shadow: 0 0 4px var(--color-dark);
 }
 
 #timer {
@@ -44,12 +38,6 @@ body {
 
 .question-image-mask {
 	background-color: var(--color-dark);
-	image-rendering: var(--rendering-image);
-}
-
-#question-image img {
-	image-rendering: var(--rendering-image);
-	filter: var(--filter-image);
 }
 
 #progress {
@@ -61,13 +49,7 @@ body {
 }
 
 .collected {
-	background-color: var(--color-dark);
-}
-
-.collected-image {
-	image-rendering: var(--rendering-image);
-	filter: var(--filter-image);
-	z-index: -1;
+	background-color: var(--color-medium);
 }
 
 .collected-number {
@@ -95,7 +77,6 @@ body {
 
 .option div {
 	background-color: var(--color-dark);
-	image-rendering: var(--rendering-image);
 }
 
 #settings {
@@ -109,7 +90,6 @@ body {
 
 input[type="checkbox"] {
 	border-color: var(--color-dark);
-	image-rendering: var(--rendering-image);
 }
 
 input[type="checkbox"]:checked {
@@ -121,7 +101,6 @@ select {
 }
 
 .select-wrapper::after {
-	image-rendering: var(--rendering-image);
 	background-color: var(--color-dark);
 }
 

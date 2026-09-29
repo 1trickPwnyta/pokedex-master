@@ -221,11 +221,8 @@ export class Dialog {
 				Settings.setTheme(themeDropdown.value);
 				Dialog.closeMessage();
 			});
-			const onCancel = () => {
-				Theme.apply(originalAppearance.theme ?? Theme.default_theme);
-				Dialog.closeMessage();
-			};
-			const cancelButton = UI.makeButtonText("Cancel", onCancel);
+			const onCancel = () => Theme.apply(originalAppearance.theme ?? Theme.default_theme);
+			const cancelButton = UI.makeButtonText("Cancel", () => Dialog.closeMessage(onCancel));
 			
 			Dialog.doDialog({
 				title: "Appearance",

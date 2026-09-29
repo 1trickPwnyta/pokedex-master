@@ -66,14 +66,12 @@
 		{
 			"range": [ 650, 807 ],
 			"sprite_prefix": "https://img.pokemondb.net/sprites/bank/normal/",
-			"sprite_suffix": ".png",
-			"scale": 0.1
+			"sprite_suffix": ".png"
 		},
 		{
 			"range": [ 808, 1025 ],
 			"sprite_prefix": "https://img.pokemondb.net/sprites/home/normal/",
-			"sprite_suffix": ".png",
-			"scale": 0.1
+			"sprite_suffix": ".png"
 		}
 	]
 }

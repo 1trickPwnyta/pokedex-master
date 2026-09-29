@@ -82,12 +82,11 @@ export class Graphics {
 	}
 	
 	static blink(element) {
-		let normalShadow = element.style.boxShadow;
-		element.style.boxShadow = "0 0 25px 1.5vh white";
+		element.classList.add("blink-in");
 		Graphics.flushStyle(element);
-		element.style.transition = "box-shadow 0.5s ease";
-		element.style.boxShadow = normalShadow;
+		element.classList.add("blink-out");
+		element.classList.remove("blink-in");
 		Graphics.flushStyle(element);
-		element.style.transition = "";
+		element.classList.remove("blink-out");
 	}
 };
