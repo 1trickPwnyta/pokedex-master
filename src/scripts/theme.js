@@ -14,7 +14,7 @@ export class Theme {
 		document.documentElement.style.setProperty("--color-light", theme.color.light);
 		document.documentElement.style.setProperty("--color-highlight", theme.color.highlight);
 		if (theme.css) {
-			document.getElementById("theme-css").href = `./style/themes/${theme.css}`;
+			document.getElementById("theme-css").href = `./themes/${theme.css}`;
 		} else {
 			document.getElementById("theme-css").href = "";
 		}
