@@ -12,9 +12,7 @@ export class Game {
 	static optionStart = { text: "Start", action: Game.start };
 	static optionGiveup = { text: "Give up", action: Game.giveUp };
 	static optionRestart = { text: "Restart", action: Game.restart };
-	static optionHelp = { image: new URL("../graphics/help-box.png", import.meta.url).href, action: Dialog.showHelp };
-	static optionSettings = { image: new URL("../graphics/cog-box.png", import.meta.url).href, action: Dialog.showSettings };
-	
+
 	static board;
 	static level = -1;
 	static startTime;

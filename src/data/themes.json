@@ -84,6 +84,7 @@
 				"light": "#A1B282",
 				"highlight": "#899B6A"
 			},
+			"icon": "iconRetro",
 			"css": "retro.css"
 		}
 	}

@@ -16,6 +16,7 @@
 	min-width: 45vw;
 	max-width: 65vw;
 	min-height: 35vh;
+	max-height: 75vh;
 	flex-direction: column;
 	position: relative;
 }
@@ -46,6 +47,16 @@
 .message-text {
 	text-align: left;
 	width: 100%;
+	overflow: scroll;
+}
+
+.message-text h1 {
+	font-size: 1.1em;
+	margin-bottom: 1vh;
+}
+
+.message-text a {
+	text-decoration: none;
 }
 
 .message-close {
@@ -142,13 +153,28 @@ select {
 
 .settings-main {
 	padding-top: 1vh;
+}
+
+.settings-top {
 	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
+	flex-direction: column;
 	gap: 1vh;
+}
+
+@media (min-width: 600px) {
+	.settings-top {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		row-gap: 1vh;
+		column-gap: 0;
+	}
 }
 
 .settings-bottom {
 	padding: 1vh 0;
 	width: 100%;
+	display: flex;
+	flex-direction: row;
+	gap: 1vh;
 }

@@ -10,4 +10,5 @@ await Graphics.init();
 Layout.init();
 Game.init();
 
+window.onMenuClick = Layout.onMenuClick;
 window.onAnswerInput = Layout.onAnswerInput;

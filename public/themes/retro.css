@@ -52,8 +52,6 @@ body {
 
 #answer-field:focus {
 	box-shadow: none;
-	background-color: var(--color-medium);
-	color: var(--color-light);
 }
 
 #message-background {
@@ -78,7 +76,6 @@ img {
 
 .input-ghost {
 	font-size: 3cqh;
-	color: var(--color-light);
 	transform: translateY(0.5cqh);
 	animation: float 1s forwards ease-out;
 }

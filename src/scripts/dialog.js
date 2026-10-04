@@ -157,10 +157,39 @@ export class Dialog {
 	<p>The path to Pokédex mastery is long and difficult. Do you have what it takes?</p>`
 		});
 	}
+	
+	static showCredits() {
+		Dialog.doDialog({
+			title: "Credits",
+			message: `
+<p>
+	<h1>Pokémon sprites</h1>
+	<b>Compilation:</b> Caruban<br />
+	<b>Gen 1-5 sprites:</b> veekun<br />
+	<b>Gen 6-8 sprites:</b> Contributors to Smogon Sprite Project<br />
+	<b>Gen 9 sprites:</b> KingOfThe-X-Roads, Mak, Caruban, jinxed, leParagon, Sopita_Yorita, Azria,
+	Mashirosakura, JordanosArt, Abnayami, OldSoulja, Katten, Divaruta 666, Clara, Skyflyer, AshnixsLaw,
+	ace_stryfe<br />
+	<small>Sourced from <a href="https://eeveeexpo.com/resources/1101/" target="_blank">Gen 9 Resource Pack,
+	Eevee Expo</a></small>
+</p>
+<p>
+	Most icons used are provided by <a href="https://pictogrammers.com/" target="_blank">Pictogrammers</a> 
+	from the <a href="https://pictogrammers.com/library/mdi/" target="_blank">Material Design Icons</a>
+	library, licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank">
+	Apache License 2.0</a>.
+</p>
+`
+		});
+	}
 
 	static showSettings() {
 		const element = document.createElement("div");
 		element.className = "settings-main";
+		
+		const top = document.createElement("div");
+		top.className = "settings-top";
+		element.appendChild(top);
 		
 		const generationsButton = UI.makeButtonText("Generations", () => {
 			const selected = Settings.getGenerations();
@@ -174,7 +203,7 @@ export class Dialog {
 				showSelectAll: true
 			});
 		});
-		element.appendChild(generationsButton.element);
+		top.appendChild(generationsButton.element);
 		
 		const gameplayButton = UI.makeButtonText("Gameplay", () => {
 			const gameplay = Settings.getGameplay();
@@ -205,7 +234,7 @@ export class Dialog {
 				buttons: [ submitButton, cancelButton ]
 			});
 		});
-		element.appendChild(gameplayButton.element);
+		top.appendChild(gameplayButton.element);
 		
 		const appearanceButton = UI.makeButtonText("Appearance", () => {
 			const appearance = Settings.getAppearance();
@@ -219,6 +248,9 @@ export class Dialog {
 			
 			const submitButton = UI.makeButtonText("Save", () => {
 				Settings.setTheme(themeDropdown.value);
+				if (Game.level < 0) {
+					Game.reset();
+				}
 				Dialog.closeMessage();
 			});
 			const onCancel = () => Theme.apply(originalAppearance.theme ?? Theme.default_theme);
@@ -231,7 +263,10 @@ export class Dialog {
 				onCancel: onCancel
 			});
 		});
-		element.appendChild(appearanceButton.element);
+		top.appendChild(appearanceButton.element);
+		
+		const creditsButton = UI.makeButtonText("Credits", Dialog.showCredits);
+		top.appendChild(creditsButton.element);
 		
 		const bottom = document.createElement("div");
 		bottom.className = "settings-bottom";
@@ -242,10 +277,12 @@ export class Dialog {
 			Sound.click.play();
 		}, false);
 		bottom.appendChild(audioButton.element);
+		const helpButton = UI.makeButtonImage(Graphics.helpBox, Dialog.showHelp);
+		bottom.appendChild(helpButton.element);
 		element.appendChild(bottom);
 		
 		Dialog.doDialog({
-			title: "Options",
+			title: "Menu",
 			titleJustification: "center",
 			element: element
 		});

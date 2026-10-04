@@ -81,9 +81,34 @@ body {
 	width: 100%;
 }
 
+#top-left {
+	display: flex;
+	flex-direction: row;
+	gap: 2vh;
+	width: 100%;
+	height: 7vh;
+}
+
+#settings {
+	min-width: 7vh;
+	padding: 0;
+	cursor: pointer;
+	position: relative;
+}
+
+#settings::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	mask-image: url("../graphics/menu.png");
+	mask-position: center;
+	mask-size: contain;
+}
+
 #timer {
 	min-height: 3vh;
 	max-height: 3vh;
+	width: 100%;
 }
 
 #question {
@@ -252,11 +277,7 @@ body {
 	border-radius: 1vh;
 }
 
-.option:active {
+#settings:active, .option:active {
 	box-shadow: 0 0 5px 0.5vh black;
 	transform: scale(90%);
-}
-
-#settings {
-	padding: 1vh;
 }

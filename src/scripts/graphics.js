@@ -1,20 +1,24 @@
 import data from "../data/data.json";
 
 import IMAGE_ICON from "../graphics/icon.png";
+import IMAGE_ICON_RETRO from "../graphics/icon-retro.png";
 import IMAGE_CHECKBOX_CHECKED from "../graphics/checkbox-marked.png?inline";
 import IMAGE_CLOSE_BOX from "../graphics/close-box.png?inline";
 import IMAGE_SOUND_ON from "../graphics/volume-high.png?inline";
 import IMAGE_SOUND_OFF from "../graphics/volume-off.png?inline";
 import IMAGE_DROPDOWN_ARROW from "../graphics/chevron-down.png?inline";
+import IMAGE_HELP_BOX from "../graphics/help-box.png?inline";
 import IMAGE_NO_IMAGE from "../graphics/alert-circle.png?inline";
 
 export class Graphics {
 	static icon = IMAGE_ICON;
+	static iconRetro = IMAGE_ICON_RETRO;
 	static checkboxChecked = IMAGE_CHECKBOX_CHECKED;
 	static closeBox = IMAGE_CLOSE_BOX;
 	static soundOn = IMAGE_SOUND_ON;
 	static soundOff = IMAGE_SOUND_OFF;
 	static dropdownArrow = IMAGE_DROPDOWN_ARROW;
+	static helpBox = IMAGE_HELP_BOX;
 	static noImage = IMAGE_NO_IMAGE;
 	
 	static async init() {
@@ -24,6 +28,7 @@ export class Graphics {
 		await Graphics.cacheBackground(IMAGE_CHECKBOX_CHECKED, "--checkbox-checked", true);
 		await Graphics.cacheBackground(IMAGE_SOUND_ON, null, true);
 		await Graphics.cacheBackground(IMAGE_DROPDOWN_ARROW, "--dropdown-arrow", true);
+		await Graphics.cacheBackground(IMAGE_HELP_BOX, null, true);
 		await Graphics.cacheBackground(IMAGE_SOUND_OFF, null, true);
 	}
 
@@ -66,8 +71,15 @@ export class Graphics {
 	static getSpriteUrl(number, pokemon) {
 		for (const sprite_source of data.sprite_sources) {
 			if (sprite_source.range[0] <= number && sprite_source.range[1] >= number) {
+				const imageId = pokemon.imageId ?? pokemon.name.toUpperCase();
+				let url = `${sprite_source.sprite_prefix}${imageId}${sprite_source.sprite_suffix}`;
+				if (sprite_source.sprite_url_relative) {
+					url = new URL(`${import.meta.env.BASE_URL}${url}`, import.meta.url).href;
+				} else {
+					url = url.toLowerCase();
+				}
 				return {
-					url: `${sprite_source.sprite_prefix}${pokemon.imageId ?? pokemon.name.toLowerCase()}${sprite_source.sprite_suffix}`,
+					url: url,
 					yoffset: sprite_source.sprite_yoffset,
 					scale: sprite_source.scale
 				};

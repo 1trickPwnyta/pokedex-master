@@ -8,6 +8,7 @@ import { Graphics } from "./graphics";
 import { Sound } from "./sound";
 import { Button } from "./ui";
 import { Dialog } from "./dialog";
+import { Theme } from "./theme";
 import { Settings } from "./settings";
 
 const options = [];
@@ -27,12 +28,9 @@ export class Layout {
 	static answerText = document.getElementById("answer-text");
 	static answerField = document.getElementById("answer-field");
 	static options = document.getElementById("options");
-	static settings = document.getElementById("settings");
 	
 	static init() {
 		Layout.reset();
-		Layout.addSetting(Game.optionHelp);
-		Layout.addSetting(Game.optionSettings);
 		Layout.main.style.visibility = "visible";
 		Layout.loading.style.opacity = "0";
 		setTimeout(() => document.body.removeChild(Layout.loading), 1000);
@@ -60,7 +58,7 @@ export class Layout {
 		Layout.addOption(Game.optionStart);
 		Layout.setQuestion({
 			text: "Welcome to<br />Pokédex Master",
-			image: Graphics.icon,
+			image: Graphics[Theme.current?.icon ?? "icon"],
 			imageMask: true
 		});
 		Layout.clearCollection();
@@ -125,15 +123,6 @@ export class Layout {
 		while (options.length) {
 			Layout.removeOption(options[0]);
 		}
-	}
-
-	static addSetting(set) {
-		const setting = new Button({
-			text: set.text,
-			image: set.image,
-			action: set.action
-		});
-		Layout.settings.appendChild(setting.element);
 	}
 	
 	static startTimer() {
@@ -205,6 +194,11 @@ export class Layout {
 	static updateProgress() {
 		const progress = `${Game.level}<br />/ ${Game.board.length}`;
 		Layout.progress.innerHTML = progress;
+	}
+	
+	static onMenuClick() {
+		Sound.click.play();
+		Dialog.showSettings();
 	}
 	
 	static onAnswerInput() {

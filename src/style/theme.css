@@ -28,6 +28,10 @@ body {
 	text-shadow: 0 0 4px var(--color-dark);
 }
 
+#settings::before {
+	background-color: var(--color-light);
+}
+
 #timer {
 	background-color: var(--color-medium);
 }
@@ -86,6 +90,15 @@ body {
 .message-box {
 	background-color: var(--color-light);
 	border-color: var(--color-dark);
+}
+
+.message-text b {
+	color: var(--color-medium);
+}
+
+.message-text a {
+	color: var(--color-highlight);
+	text-shadow: 1px 1px var(--color-dark);
 }
 
 input[type="checkbox"] {
