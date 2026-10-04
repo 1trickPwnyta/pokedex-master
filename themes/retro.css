@@ -1,0 +1,81 @@
+* {
+	image-rendering: pixelated;
+	text-transform: uppercase;
+}
+
+body {
+	font-family: "Press Start 2P", monospace;
+	font-size-adjust: ch-width 0.75;
+}
+
+.card .option {
+	font-size: 2.5cqh;
+}
+
+#options .option {
+	font-size: 3.5cqh;
+}
+
+.card, .option, .button-column .option, input[type="checkbox"], select, #answer-field, .collected-number {
+	border-radius: 0;
+}
+
+.option div {
+	mask-size: auto 110%;
+}
+
+#progress {
+	font-size: 2cqh;
+}
+
+.collected-number {
+	background-color: var(--color-highlight);
+	font-size: min(3cqw, 3cqh);
+}
+
+#question-text {
+	font-size: 3.5cqh;
+}
+
+.question-number {
+	font-size: min(15cqh, 20cqw);
+}
+
+#answer {
+	font-size: 2.5cqh;
+}
+
+#answer-field {
+	font-size: 3cqh;
+	line-height: 4cqh;
+}
+
+#answer-field:focus {
+	box-shadow: none;
+}
+
+#message-background {
+	background-color: var(--color-medium);
+}
+
+.message-title {
+	font-size: 1em;
+}
+
+.message-area label {
+	font-size: 0.8em;
+}
+
+input[type="checkbox"]:checked {
+	mask-size: auto 110%;
+}
+
+img {
+	filter: url("#retro-palette");
+}
+
+.input-ghost {
+	font-size: 3cqh;
+	transform: translateY(0.5cqh);
+	animation: float 1s forwards ease-out;
+}

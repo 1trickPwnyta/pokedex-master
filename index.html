@@ -1,0 +1,88 @@
+<html>
+	<head>
+		<title>Pokédex Master</title>
+		<meta charset="UTF-8">
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="https://1trickPwnyta.github.io/pokedex-master/">
+		<meta property="og:title" content="Pokédex Master">
+		<meta property="og:description" content="Gotta index 'em all in your memory!">
+		<meta property="og:image" content="https://1trickPwnyta.github.io/pokedex-master/preview.png">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content, viewport-fit=cover">
+		<link rel="icon" type="image/x-icon" href="./favicon.ico" />
+		<link rel="manifest" href="./manifest.json" />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+		<svg xmlns="http://www.w3.org/2000/svg" style="position: absolute; width: 0; height: 0; overflow: hidden;">
+			<defs>
+				<filter id="retro-palette" color-interpolation-filters="sRGB">
+					<feComponentTransfer in="SourceGraphic" result="BoostedContrast">
+						<feFuncR type="linear" slope="2.4" intercept="-0.7" />
+						<feFuncG type="linear" slope="2.4" intercept="-0.7" />
+						<feFuncB type="linear" slope="2.4" intercept="-0.7" />
+					</feComponentTransfer>
+					<feColorMatrix type="matrix" in="BoostedContrast" result="Grayscale"
+						values="0.2126 0.7152 0.0722 0 0
+								0.2126 0.7152 0.0722 0 0
+								0.2126 0.7152 0.0722 0 0
+								0      0      0      1 0" />
+					<feComponentTransfer in="Grayscale" result="RetroGraphic">
+						<feFuncR type="discrete" tableValues="0.1216 0.1961 0.2588 0.4000 0.5373 0.6314" />
+						<feFuncG type="discrete" tableValues="0.1804 0.2431 0.2980 0.4667 0.6078 0.6980" />
+						<feFuncB type="discrete" tableValues="0.1216 0.1647 0.2039 0.3255 0.4157 0.5098" />
+					</feComponentTransfer>
+					<feMorphology in="BoostedContrast" operator="dilate" radius="1" result="ScaledAlpha" />
+					<feColorMatrix in="ScaledAlpha" type="matrix" result="Outline"
+						values="0 0 0 0 0.2588
+								0 0 0 0 0.2980
+								0 0 0 0 0.2039
+								0 0 0 1 0" />
+					<feMerge>
+						<feMergeNode in="Outline" />
+						<feMergeNode in="RetroGraphic" />
+					</feMerge>
+				</filter>
+			</defs>
+		</svg>
+		<script type="module" crossorigin src="/pokedex-master/assets/index-BnWuBioh.js"></script>
+		<link rel="stylesheet" crossorigin href="/pokedex-master/assets/index-Dh_hdYbl.css">
+	</head>
+	<body>
+		<div id="loading"><div class="graphic"></div></div>
+		<div id="message-background" style="visibility: hidden;"></div>
+		<div id="main" style="visibility: hidden;">
+			<div id="top">
+				<div id="left">
+					<div id="top-left">
+						<div id="settings" class="card dark button-area" onclick="onMenuClick()"></div>
+						<div id="timer" class="card dark"></div>
+					</div>
+					<div id="question" class="card light">
+						<div id="question-text">
+							Welcome to<br />Pokédex Master
+						</div>
+						<div id="question-image">
+							<img src="/pokedex-master/assets/icon-h0JAtxaR.png" />
+						</div>
+					</div>
+				</div>
+				<div id="right">
+					<div id="progress" class="card dark"></div>
+					<div id="collection" class="card light">
+						<div id="collection-container"></div>
+					</div>
+				</div>
+			</div>
+			<div id="answer" class="card light">
+				<div id="answer-box" style="visibility: hidden;">
+					<span id="answer-text">Which Pokémon is it?</span><br />
+					<input id="answer-field" type="text" oninput="onAnswerInput()" />
+				</div>
+			</div>
+			<div id="bottom">
+				<div id="options" class="card dark button-area"></div>
+			</div>
+		</div>
+		<link rel="stylesheet" id="theme-css" href="" />
+	</body>
+</html>
