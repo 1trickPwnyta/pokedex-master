@@ -8,6 +8,7 @@ export class Sound {
 	
 	static load(url) {
 		const audio = new Audio(url);
+		audio.preload = "auto";
 		return new Sound(audio);
 	}
 	
@@ -18,6 +19,9 @@ export class Sound {
 	}
 	
 	play() {
-		if (!Settings.isMuteAudio()) this.audio.play();
+		if (!Settings.isMuteAudio()) {
+			this.audio.currentTime = 0;
+			this.audio.play();
+		}
 	}
 };

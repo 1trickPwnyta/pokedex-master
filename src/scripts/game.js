@@ -8,10 +8,15 @@ import { Dialog } from "./dialog";
 import { Settings } from "./settings";
 import data from "../data/data.json";
 
+const BLITZ_SECONDS = 60;
+
 export class Game {
+	static blitzModeSeconds = BLITZ_SECONDS;
+	
 	static optionStart = { text: "Start", action: Game.start };
 	static optionGiveup = { text: "Give up", action: Game.giveUp };
 	static optionRestart = { text: "Restart", action: Game.restart };
+	static optionCredits = { text: "Credits", action: Dialog.showCredits };
 
 	static board;
 	static level = -1;
@@ -43,7 +48,6 @@ export class Game {
 
 	static reset() {
 		Game.stop();
-		Game.level = -1;
 		Layout.reset();
 	}
 
@@ -51,6 +55,14 @@ export class Game {
 		Layout.stopGame();
 		Game.level = -1;
 		Game.buildBoard();
+	}
+	
+	static timeUp() {
+		Sound.win.play();
+		Layout.setQuestion({
+			text: `Time up!<br />You numbered <span class="good">${Game.level} Pokémon</span> in ${Game.blitzModeSeconds} seconds!`
+		});
+		Game.stop();
 	}
 	
 	static giveUp() {

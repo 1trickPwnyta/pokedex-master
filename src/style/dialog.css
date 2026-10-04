@@ -48,6 +48,7 @@
 	text-align: left;
 	width: 100%;
 	overflow: scroll;
+	overflow-wrap: break-word;
 }
 
 .message-text h1 {

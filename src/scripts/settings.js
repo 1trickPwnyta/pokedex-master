@@ -6,14 +6,16 @@ const MUTE_AUDIO = `${PREFIX}muteAudio`;
 const GENERATIONS = `${PREFIX}generations`;
 const GAMEPLAY = `${PREFIX}gameplay`;
 const APPEARANCE = `${PREFIX}appearance`;
+const FIRST_TIME = `${PREFIX}firstTime`;
 
 export class Settings {
 	static normalMode = "Normal";
 	static reverseMode = "Reverse";
+	static blitzMode = "Blitz";
 	static orderedMode = "Ordered";
 	
 	static isMuteAudio() {
-		return JSON.parse(localStorage[MUTE_AUDIO] ?? 0) || false;
+		return JSON.parse(localStorage[MUTE_AUDIO] ?? "false");
 	}
 	
 	static setMuteAudio(muteAudio) {
@@ -49,6 +51,10 @@ export class Settings {
 		localStorage[GAMEPLAY] = JSON.stringify(gameplay);
 	}
 	
+	static isBlitzMode() {
+		return Settings.getGameplay().mode == Settings.blitzMode;
+	}
+	
 	static isOrderedMode() {
 		return Settings.getGameplay().mode == Settings.orderedMode;
 	}
@@ -69,5 +75,13 @@ export class Settings {
 		const appearance = Settings.getAppearance();
 		appearance.theme = theme;
 		localStorage[APPEARANCE] = JSON.stringify(appearance);
+	}
+	
+	static isFirstTime() {
+		return JSON.parse(localStorage[FIRST_TIME] ?? "true");
+	}
+	
+	static setFirstTime(firstTime) {
+		localStorage[FIRST_TIME] = JSON.stringify(firstTime);
 	}
 };

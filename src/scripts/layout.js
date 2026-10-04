@@ -49,6 +49,7 @@ export class Layout {
 	static stopGame() {
 		Layout.removeAllOptions();
 		Layout.addOption(Game.optionRestart);
+		Layout.addOption(Game.optionCredits);
 		Layout.hideAnswerBox();
 		Layout.stopTimer();
 	}
@@ -132,10 +133,18 @@ export class Layout {
 	
 	static updateTimer() {
 		const milliseconds = new Date() - Game.startTime;
-		const duration = dayjs.duration(milliseconds);
-		const minutes = Math.floor(duration.asMinutes());
-		const seconds = duration.seconds();
-		Layout.timer.innerText = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+		if (!Settings.isBlitzMode()) {
+			const duration = dayjs.duration(milliseconds);
+			const minutes = Math.floor(duration.asMinutes());
+			const seconds = duration.seconds();
+			Layout.timer.innerText = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+		} else {
+			const timeLeft = Game.blitzModeSeconds - Math.floor(milliseconds / 1000);
+			Layout.timer.innerText = timeLeft.toString().padStart(2, "0");
+			if (timeLeft <= 0) {
+				Game.timeUp();
+			}
+		}
 	}
 	
 	static stopTimer() {

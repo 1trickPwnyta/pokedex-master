@@ -153,8 +153,21 @@ export class Dialog {
 		Dialog.doDialog({
 			title: `Pokédex Master v${__APP_VERSION__}`,
 			subtitle: "by 1trickPwnyta",
-			message: `<p>So you can name all the Pokémon in dex order from memory and you think you're real smart, huh? But can you name them all <em>by dex number</em> in random order?</p>
-	<p>The path to Pokédex mastery is long and difficult. Do you have what it takes?</p>`
+			message: `
+				<p>
+					So you can name all the Pokémon in national dex order from memory and you think you're real
+					smart, huh? But do you know each one's <b>dex number</b>? Can you name them all in random
+					order?
+				</p>
+				<p>
+					The path to Pokédex mastery is long and difficult. Do you have what it takes?
+				</p>
+				<p>
+					Questions or comments? Start a discussion on
+					<a href="https://github.com/1trickPwnyta/pokedex-master/discussions/new/choose"
+					target="_blank">GitHub</a>.
+				</p>
+			`
 		});
 	}
 	
@@ -162,24 +175,39 @@ export class Dialog {
 		Dialog.doDialog({
 			title: "Credits",
 			message: `
-<p>
-	<h1>Pokémon sprites</h1>
-	<b>Compilation:</b> Caruban<br />
-	<b>Gen 1-5 sprites:</b> veekun<br />
-	<b>Gen 6-8 sprites:</b> Contributors to Smogon Sprite Project<br />
-	<b>Gen 9 sprites:</b> KingOfThe-X-Roads, Mak, Caruban, jinxed, leParagon, Sopita_Yorita, Azria,
-	Mashirosakura, JordanosArt, Abnayami, OldSoulja, Katten, Divaruta 666, Clara, Skyflyer, AshnixsLaw,
-	ace_stryfe<br />
-	<small>Sourced from <a href="https://eeveeexpo.com/resources/1101/" target="_blank">Gen 9 Resource Pack,
-	Eevee Expo</a></small>
-</p>
-<p>
-	Most icons used are provided by <a href="https://pictogrammers.com/" target="_blank">Pictogrammers</a> 
-	from the <a href="https://pictogrammers.com/library/mdi/" target="_blank">Material Design Icons</a>
-	library, licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank">
-	Apache License 2.0</a>.
-</p>
-`
+				<p>
+					This is an unofficial fan-made project based on Pokémon. Official sprites and Pokémon
+					characters are © Nintendo, Creatures Inc., GAME FREAK Inc.
+				</p>
+				<p>
+					<h1>Pokémon sprites</h1>
+					<b>Compilation:</b> Caruban<br />
+					<b>Gen 1-5 sprites:</b> veekun<br />
+					<b>Gen 6-8 sprites:</b> Contributors to Smogon Sprite Project<br />
+					<b>Gen 9 sprites:</b> KingOfThe-X-Roads, Mak, Caruban, jinxed, leParagon, Sopita_Yorita,
+					Azria, Mashirosakura, JordanosArt, Abnayami, OldSoulja, Katten, Divaruta 666, Clara,
+					Skyflyer, AshnixsLaw, ace_stryfe<br />
+					<small>Sourced from <a href="https://eeveeexpo.com/resources/1101/" target="_blank">Gen 9
+					Resource Pack, Eevee Expo</a></small>
+				</p>
+				<p>
+					<h1>UI icons</h1>
+					Most icons used are provided by <a href="https://pictogrammers.com/" target="_blank">
+					Pictogrammers</a> from the <a href="https://pictogrammers.com/library/mdi/" target="_blank">
+					Material Design Icons</a> library, licensed under the
+					<a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License 2.0</a>.
+				</p>
+				<p>
+					<h1>Fonts</h1>
+					<b>Passion One</b> © 2011 Fontstage (info@fontstage.com), with Reserved Font Name "Passion"<br />
+					<b>Press Start 2P</b> © 2012 The Press Start 2P Project Authors (cody@zone38.net), with Reserved Font Name "Press Start 2P"
+				</p>
+				<p>
+					<h1>Programming</h1>
+					100% hand-coded and tested by <a href="https://github.com/1trickPwnyta" target="_blank">
+					1trickPwnyta</a>. AI used for consulting purposes only.
+				</p>
+			`
 		});
 	}
 
@@ -212,6 +240,7 @@ export class Dialog {
 			const modeDropdown = UI.makeDropdown("Game mode", [
 				Settings.normalMode,
 				Settings.reverseMode,
+				Settings.blitzMode,
 				Settings.orderedMode
 			], gameplay.mode);
 			gameplayElement.appendChild(modeDropdown.element);

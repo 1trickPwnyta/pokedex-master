@@ -23,7 +23,6 @@ export class Graphics {
 	
 	static async init() {
 		await Graphics.cacheImage(IMAGE_ICON);
-		await Graphics.cacheBackground(IMAGE_NO_IMAGE, null, true);
 		await Graphics.cacheBackground(IMAGE_CLOSE_BOX, null, true);
 		await Graphics.cacheBackground(IMAGE_CHECKBOX_CHECKED, "--checkbox-checked", true);
 		await Graphics.cacheBackground(IMAGE_SOUND_ON, null, true);
@@ -71,12 +70,10 @@ export class Graphics {
 	static getSpriteUrl(number, pokemon) {
 		for (const sprite_source of data.sprite_sources) {
 			if (sprite_source.range[0] <= number && sprite_source.range[1] >= number) {
-				const imageId = pokemon.imageId ?? pokemon.name.toUpperCase();
+				const imageId = pokemon.imageId ?? pokemon.name.toLowerCase().replaceAll(/[^a-z0-9]/g, "");
 				let url = `${sprite_source.sprite_prefix}${imageId}${sprite_source.sprite_suffix}`;
 				if (sprite_source.sprite_url_relative) {
 					url = new URL(`${import.meta.env.BASE_URL}${url}`, import.meta.url).href;
-				} else {
-					url = url.toLowerCase();
 				}
 				return {
 					url: url,
