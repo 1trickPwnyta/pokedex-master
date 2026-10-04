@@ -8,12 +8,18 @@ body {
 	font-size-adjust: ch-width 0.75;
 }
 
-.card .option {
-	font-size: 2.5cqh;
+.good {
+	text-shadow: 1px 1px var(--color-dark);
 }
 
-#options .option {
-	font-size: 3.5cqh;
+.bad {
+	color: var(--color-medium);
+	text-shadow: 1px 1px var(--color-dark);
+}
+
+.card .option {
+	font-size: 2.5cqh;
+	line-height: 4cqh;
 }
 
 .card, .option, .button-column .option, input[type="checkbox"], select, #answer-field, .collected-number {
@@ -26,6 +32,10 @@ body {
 
 #progress {
 	font-size: 2cqh;
+}
+
+#collection-container {
+	mask-image: initial;
 }
 
 .collected-number {
@@ -63,6 +73,10 @@ body {
 }
 
 .message-area label {
+	font-size: 0.8em;
+}
+
+.message-text {
 	font-size: 0.8em;
 }
 

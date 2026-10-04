@@ -1,0 +1,1 @@
+powershell -Command "Get-ChildItem -File -Filter *.png | Rename-Item -NewName { $_.Name.ToLower() }"
